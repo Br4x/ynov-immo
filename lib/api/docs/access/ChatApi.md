@@ -5,7 +5,7 @@
 import 'package:swagger/api.dart';
 ```
 
-All URIs are relative to *http://127.0.0.1:5555/api/v1*
+All URIs are relative to *http://ynov-api.ew.r.appspot.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

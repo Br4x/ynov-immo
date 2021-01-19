@@ -18,7 +18,7 @@ class ApiClient {
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "http://127.0.0.1:5555/api/v1"}) {
+  ApiClient({this.basePath: "http://ynov-api.ew.r.appspot.com/api/v1"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
