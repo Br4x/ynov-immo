@@ -20,7 +20,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://ynov-api.ew.r.appspot.com/api/v1*
+All URIs are relative to *https://ynov-api.ew.r.appspot.com/api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
