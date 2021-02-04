@@ -6,14 +6,14 @@ class TitlePriceRating extends StatelessWidget {
   final int price, numOfReviews;
   final double rating;
   final String name;
-  final RatingChangeCallback onRatingChanged;
+  // final RatingChangeCallback onRatingChanged;
   const TitlePriceRating({
     Key key,
     this.price,
     this.numOfReviews,
     this.rating,
     this.name,
-    this.onRatingChanged,
+    // this.onRatingChanged,
   }) : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class TitlePriceRating extends StatelessWidget {
                     SmoothStarRating(
                       borderColor: kPrimaryColor,
                       rating: rating,
-                      onRatingChanged: onRatingChanged,
+                      // onRatingChanged: onRatingChanged,
                     ),
                     SizedBox(width: 10),
                     Text("$numOfReviews reviews"),
