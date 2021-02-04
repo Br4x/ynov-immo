@@ -34,7 +34,33 @@ class User {
 /* Longitude */
   String longitude = null;
   
-  User();
+  User(
+    {
+      int    id,
+      String email,
+      String password,
+      String avatar,
+      String firstName,
+      String lastName,
+      String address,
+      String zipCode,
+      String city,
+      String latitude,
+      String longitude
+    }
+  ) {
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.avatar = avatar;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+    this.zipCode = zipCode;
+    this.city = city;
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 
   @override
   String toString() {
