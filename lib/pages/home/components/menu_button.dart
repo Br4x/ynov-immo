@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
 
-class ItemCard extends StatelessWidget {
-  final String title, shopName, svgSrc;
+class MenuButton extends StatelessWidget {
+  final String title, svgSrc;
   final Function press;
-  const ItemCard({
+  const MenuButton({
     Key key,
     this.title,
-    this.shopName,
     this.svgSrc,
     this.press,
   }) : super(key: key);
@@ -47,16 +46,12 @@ class ItemCard extends StatelessWidget {
                   ),
                   child: SvgPicture.asset(
                     svgSrc,
-                    width: size.width * 0.18,
+                    width: size.width * 0.17,
                     // size.width * 0.18 means it use 18% of total width
                   ),
                 ),
                 Text(title),
                 SizedBox(height: 10),
-                Text(
-                  shopName,
-                  style: TextStyle(fontSize: 12),
-                ),
               ],
             ),
           ),
