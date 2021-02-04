@@ -34,9 +34,7 @@ class TitlePriceRating extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     SmoothStarRating(
-                      borderColor: kPrimaryColor,
-                      rating: rating
-                    ),
+                        borderColor: kPrimaryColor, rating: rating),
                     SizedBox(width: 10),
                     Text("$numOfReviews reviews"),
                   ],
