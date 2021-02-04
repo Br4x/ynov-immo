@@ -5,7 +5,7 @@ import 'package:ynov_immo/constants.dart';
 AppBar homeAppBar(BuildContext context) {
   return AppBar(
     centerTitle: true,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.orange,
     elevation: 1,
     leading: IconButton(
       icon: SvgPicture.asset("assets/icons/menu.svg"),
@@ -20,18 +20,18 @@ AppBar homeAppBar(BuildContext context) {
         children: [
           TextSpan(
             text: "Ynov",
-            style: TextStyle(color: ksecondaryColor),
+            style: TextStyle(color: Colors.white),
           ),
           TextSpan(
             text: "Immo",
-            style: TextStyle(color: kPrimaryColor),
+            style: TextStyle(color: Colors.white),
           ),
         ],
       ),
     ),
     actions: <Widget>[
       IconButton(
-        icon: SvgPicture.asset("assets/icons/notification.svg"),
+        icon: SvgPicture.asset("assets/icons/person.svg"),
         onPressed: () {},
       ),
     ],
