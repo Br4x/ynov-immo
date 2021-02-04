@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ynov_immo/pages/details/details-screen.dart';
+// import 'package:ynov_immo/pages/details/details-screen.dart';
 import 'package:ynov_immo/pages/home/components/item_card.dart';
+import 'package:ynov_immo/pages/sell/sell-screen.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({
@@ -22,7 +23,7 @@ class ItemList extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return DetailsScreen();
+                    return SellScreen();
                   },
                 ),
               );
