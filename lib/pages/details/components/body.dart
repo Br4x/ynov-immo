@@ -41,7 +41,7 @@ class ItemInfo extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          shopeName(name: "MacDonalds"),
+          shopeName(name: "Vive la france"),
           TitlePriceRating(
             name: "Cheese Burger",
             numOfReviews: 24,
