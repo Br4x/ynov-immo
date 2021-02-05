@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
+import 'package:ynov_immo/pages/login/ui/login_page.dart';
 
 AppBar homeAppBar(BuildContext context) {
   return AppBar(
@@ -9,7 +10,12 @@ AppBar homeAppBar(BuildContext context) {
     elevation: 1,
     leading: IconButton(
       icon: SvgPicture.asset("assets/icons/menu.svg"),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      },
     ),
     title: RichText(
       text: TextSpan(
