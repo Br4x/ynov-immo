@@ -79,6 +79,9 @@ class _LoginPageState extends State<LoginPage> {
                                     hint: "Adresse email",
                                     onCaretMoved: (Offset caret) {
                                       _teddyController.lookAt(caret);
+                                    },
+                                    onTextChanged: (String emailValue) {
+                                      _teddyController.setEmail(emailValue);
                                     }),
                                 TrackingTextInput(
                                   label: "Password",

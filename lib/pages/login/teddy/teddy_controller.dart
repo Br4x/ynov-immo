@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:http/http.dart' as http;
 import 'package:flare_flutter/flare.dart';
 import 'package:flare_dart/math/mat2d.dart';
 import 'package:flare_dart/math/vec2d.dart';
@@ -28,6 +30,7 @@ class TeddyController extends FlareControls {
   // Project gaze forward by this many pixels.
   static const double _projectGaze = 60.0;
 
+  String _email;
   String _password;
 
   @override
@@ -108,6 +111,10 @@ class TeddyController extends FlareControls {
     _hasFocus = true;
   }
 
+  void setEmail(String emailValue) {
+    _email = emailValue;
+  }
+
   void setPassword(String value) {
     _password = value;
   }
@@ -125,8 +132,14 @@ class TeddyController extends FlareControls {
     }
   }
 
-  void submitPassword() {
-    if (_password == "bears") {
+  void submitPassword() async {
+    final response = await http.post(
+      "https://ynov-api.ew.r.appspot.com/api/v1/login",
+      body: {'email': _email, "password": _password},
+    );
+    var data = jsonDecode(response.body);
+    var result = data["code"];
+    if (result != 0) {
       play("success");
     } else {
       play("fail");
