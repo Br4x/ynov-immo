@@ -2,66 +2,110 @@ part of swagger.api;
 
 class RealEstate {
   /* Id du bien */
-  int id = null;
+  int id;
   
 /* Id du proprietaire */
-  int idUser = null;
+  int idUser;
   
 /* Phrase d'accroche (max 100 caractères) */
-  String accroche = null;
+  String accroche;
   
 /* Type de bien ('apartment','house','vacant_lot','parking','loft','castle','building') */
-  String type = null;
+  String type;
   
 /* Nombre de pièce */
-  int nbRooms = null;
+  int nbRooms;
   
 /* Nombre de chambre */
-  int nbBedroom = null;
+  int nbBedroom;
   
 /* Description */
-  String description = null;
+  String description;
   
 /* Superficie (en entier) */
-  int size = null;
+  int size;
   
 /* Prix du bien */
-  int price = null;
+  int price;
   
 /* Adresse */
-  String address = null;
+  String address;
   
 /* Code postal */
-  String zipCode = null;
+  String zipCode;
   
 /* Ville */
-  String city = null;
+  String city;
   
 /* Latitude */
-  String latitude = null;
+  String latitude;
   
 /* Longitude */
-  String longitude = null;
+  String longitude;
   
 /* Classe d'énergie */
-  String energyClass = null;
+  String energyClass;
   
 /* Classe GES */
-  String gesClass = null;
+  String gesClass;
   
 /* A un jardin */
-  int hasGarden = null;
+  int hasGarden;
   
 /* A des pierres apparentes */
-  int hasExposedStone = null;
+  int hasExposedStone;
   
 /* A des carreaux de ciments */
-  int hasCimentTiles = null;
+  int hasCimentTiles;
   
 /* A du parquet au sol */
-  int hasParquetFloor = null;
-  
-  RealEstate();
+  int hasParquetFloor;
+
+  RealEstate(
+  {
+    int id,
+    int idUser,
+    String accroche,
+    String type,
+    int nbRooms,
+    int nbBedroom,
+    String description,
+    int size,
+    int price,
+    String address,
+    String zipCode,
+    String city,
+    String latitude,
+    String longitude,
+    String energyClass,
+    String gesClass,
+    int hasGarden,
+    int hasExposedStone,
+    int hasCimentTiles,
+    int hasParquetFloor
+  }
+  ) {
+    this.id = id;
+    this.idUser = idUser;
+    this.accroche = accroche;
+    this.type = type;
+    this.nbRooms = nbRooms;
+    this.nbBedroom = nbBedroom;
+    this.description = description;
+    this.size = size;
+    this.price = price;
+    this.address = address;
+    this.zipCode = zipCode;
+    this.city = city;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.energyClass = energyClass;
+    this.gesClass = gesClass;
+    this.hasGarden = hasGarden;
+    this.hasExposedStone = hasExposedStone;
+    this.hasCimentTiles = hasCimentTiles;
+    this.hasParquetFloor = hasParquetFloor;
+  }
 
   @override
   String toString() {
@@ -69,6 +113,7 @@ class RealEstate {
   }
 
   RealEstate.fromJson(Map<String, dynamic> json) {
+    json = json['data'];
     if (json == null) return;
     id =
         json['id']
