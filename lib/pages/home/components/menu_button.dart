@@ -34,7 +34,7 @@ class MenuButton extends StatelessWidget {
         child: InkWell(
           onTap: press,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -42,16 +42,21 @@ class MenuButton extends StatelessWidget {
                   padding: EdgeInsets.all(25),
                   decoration: BoxDecoration(
                     color: kPrimaryColor.withOpacity(0.13),
-                    shape: BoxShape.circle,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: SvgPicture.asset(
                     svgSrc,
-                    width: size.width * 0.17,
+                    width: size.width * 0.18,
                     // size.width * 0.18 means it use 18% of total width
                   ),
                 ),
-                Text(title),
-                SizedBox(height: 10),
+                Text(
+                  title,
+                  style: TextStyle(color: Colors.black.withOpacity(0.4)),
+                ),
+
+                SizedBox(height: 0.5),
               ],
             ),
           ),
