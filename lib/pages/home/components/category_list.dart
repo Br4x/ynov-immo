@@ -12,7 +12,11 @@ class CategoryList extends StatelessWidget {
       child: Padding(
       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Text('Vous souhaitez :',
-      style: TextStyle(fontSize: 22))
+          style: TextStyle(
+            fontSize: 22,
+            color: Colors.black.withOpacity(0.4),
+          )
+      )
   ));
   }
 }
