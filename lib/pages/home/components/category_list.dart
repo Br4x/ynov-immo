@@ -10,7 +10,7 @@ class CategoryList extends StatelessWidget {
   Widget build(BuildContext context) {
   return Center(
       child: Padding(
-      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      padding: EdgeInsets.fromLTRB(0, 30, 0,20),
       child: Text('Vous souhaitez :',
           style: TextStyle(
             fontSize: 22,
