@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
 
 class OrderButton extends StatelessWidget {
@@ -31,7 +30,6 @@ class OrderButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SvgPicture.asset("assets/icons/bag.svg"),
                 SizedBox(width: 10),
                 Text(
                   "Order Now",
