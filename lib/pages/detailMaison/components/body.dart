@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import "package:latlong/latlong.dart" as latLng;
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:ynov_immo/pages/home/home-screen.dart';
+import 'package:flutter_map/flutter_map.dart';
+import "package:latlong/latlong.dart";
 import 'package:ynov_immo/constants.dart';
-import 'package:ynov_immo/pages/details/components/item_image.dart';
-import 'package:ynov_immo/pages/details/components/order_button.dart';
-import 'package:ynov_immo/pages/details/components/title_price_rating.dart';
 
 class RealEstateData {
     final int id;
@@ -91,7 +87,7 @@ class ItemInfo extends StatelessWidget {
           Row( //todo info /real-estate
               children: <Widget>[
                 Text(
-                  realEstateData.address,
+                  realEstateData.type,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
                 ),
@@ -117,6 +113,7 @@ class ItemInfo extends StatelessWidget {
 
             Row(
                 children: <Widget>[
+
                   cirteria(name: "jardin",icon: Icons.location_on, ispresent: false),
                   cirteria(name: "jardin",icon: Icons.location_on, ispresent: false),
                   cirteria(name: "jardin",icon: Icons.location_on, ispresent: false),
@@ -127,9 +124,50 @@ class ItemInfo extends StatelessWidget {
 
 
                 ]
-            )
+            ),
+            Container(
+            // here
+            height: 500,
+            alignment: Alignment.centerLeft,
+            child:FlutterMap(
+              options: MapOptions(
+                center: LatLng(double.parse(realEstateData.latitude.replaceAll(",", ".")),  double.parse(realEstateData.longitude.replaceAll(",", "."))),
+                zoom: 13.0,
+              ),
+              layers: [
+                TileLayerOptions(
+                    urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    subdomains: ['a', 'b', 'c']
+                ),
+                MarkerLayerOptions(
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: LatLng(double.parse(realEstateData.latitude.replaceAll(",", ".")),  double.parse(realEstateData.longitude.replaceAll(",", "."))),
+                      builder: (ctx) =>
+                          Container(
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                            ),
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            ),
+
+
+
+
+
+
           ],
         ),
+
+
 
     );
   }
