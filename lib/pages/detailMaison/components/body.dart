@@ -91,7 +91,7 @@ class ItemInfo extends StatelessWidget {
           Row( //todo info /real-estate
               children: <Widget>[
                 Text(
-                  realEstateData.name,
+                  realEstateData.address,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
                 ),

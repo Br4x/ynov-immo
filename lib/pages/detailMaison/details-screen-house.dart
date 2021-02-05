@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/constants.dart';
-import 'package:ynov_immo/pages/details/components/app_bar.dart';
+import 'package:ynov_immo/pages/detailMaison/components/app_bar.dart';
 import 'package:ynov_immo/pages/detailMaison/components/body.dart';
 import 'package:ynov_immo/api.dart';
 
