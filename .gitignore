@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 *.lock
+ios/
 .DS_Store
 .atom/
 .buildlog/

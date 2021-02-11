@@ -3,6 +3,7 @@ import 'package:ynov_immo/constants.dart';
 import 'package:ynov_immo/pages/home/home-screen.dart';
 import 'package:ynov_immo/api.dart';
 
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,18 +14,19 @@ class MyApp extends StatelessWidget {
 
     var api_instance = new RealEstateApi();
     var where = []; // List<String> | column:value will use sql LIKE for search eg:id:67 will where id >67 eg2: name:eric => where name LIKE '%eric%'
-    var fields = ''; // String | {$tableColumn},{$tableColumn}... 
+    var fields = ''; // String | {$tableColumn},{$tableColumn}...
     var order = ''; // String | eg: id desc, name desc
     var offset = 56; // int | sql offset eg: 10
     var limit = 56; // int | limit returning object count
 
-try { 
-    var result = api_instance.realEstateGet();
-    print(result);
-} catch (e) {
-    print("Exception when calling RealEstateApi->realEstateGet: $e\n");
-}
+    try {
+        var result = api_instance.realEstateGet();
+        print(result);
+    } catch (e) {
+        print("Exception when calling RealEstateApi->realEstateGet: $e\n");
+    }
 
+    KeyboardVisibility.setVisibilityForTesting(true);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ynov Immo',
