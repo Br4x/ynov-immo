@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -63,28 +64,37 @@ class ItemInfo extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: new Column(
               children: <Widget>[
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 250.0,
-                    autoPlay: true,
-                    aspectRatio: 2.0,
-                    enlargeCenterPage: true,
-                  ),
-                  items: [1,2,3,4,5].map((i) { //todo url api route /real-estate-image
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            decoration: BoxDecoration(
-                                color: Colors.transparent
-                            ),
-                            child: Image.network('https://picsum.photos/250?image=9')
-                        );
+                Badge(
+
+                  toAnimate: false,
+                  shape: BadgeShape.square,
+                  badgeColor: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(8),
+                  badgeContent: Text('5 visites prévues', style: TextStyle(color: Colors.white),),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 250.0,
+                      autoPlay: true,
+                      aspectRatio: 2.0,
+                      enlargeCenterPage: true,
+                    ),
+                    items: [1,2,3,4,5].map((i) { //todo url api route /real-estate-image
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.transparent
+                              ),
+                              child: Image.network('https://picsum.photos/250?image=9')
+                          );
                         },
-                    );
-                  }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
+
 
                 Container (
                   padding: const EdgeInsets.all(3.0),
