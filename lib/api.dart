@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:http/http.dart';
 import 'package:http/io_client.dart';
-import 'package:flutter/foundation.dart';
 
 part 'api_client.dart';
 part 'api_helper.dart';
@@ -55,6 +54,5 @@ part 'model/real_estate_visit_pagination.dart';
 part 'model/user.dart';
 part 'model/user_auth.dart';
 part 'model/user_pagination.dart';
-
 
 ApiClient defaultApiClient = new ApiClient();
