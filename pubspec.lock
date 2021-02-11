@@ -214,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  gooey_carousel:
+    dependency: "direct main"
+    description:
+      name: gooey_carousel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   graphs:
     dependency: transitive
     description:

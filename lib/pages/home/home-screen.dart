@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/home/components/app_bar.dart';
 import 'package:ynov_immo/pages/home/components/body.dart';
 import 'package:ynov_immo/api.dart';
-
+import 'package:gooey_carousel/gooey_carrousel.dart';
 
 void login () {
   var apiInstance = new AuthApi();
@@ -21,7 +21,17 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(context),
-      body: Body(),
-    );
+      body: Column(
+        children: <Widget>[
+
+          GooeyCarousel(
+            children: <Widget>[
+              Container(child: Body(), color: Colors.red),
+              Container(child: Body(),color: Colors.blue),
+              Container(child: Body(),color: Colors.green),
+            ],
+          )
+          ])
+      );
   }
 }
