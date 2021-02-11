@@ -3,6 +3,7 @@ import 'package:ynov_immo/pages/sell/components/interfaces/sell_form.dart';
 import 'package:ynov_immo/pages/sell/components/page_title.dart';
 import 'package:ynov_immo/pages/sell/components/property_description.dart';
 import 'package:ynov_immo/pages/sell/components/search.dart';
+import 'package:ynov_immo/pages/sell/components/property_images/property_images.dart';
 
 class Body extends StatefulWidget {
   const Body({Key key}) : super(key: key);
@@ -35,6 +36,7 @@ class _BodyState extends State<Body> {
           ),
         ),
         SearchPage(),
+        PropertyImages(setParentState: callback),
       ],
     );
   }

@@ -2,6 +2,7 @@ class SellForm {
   String catchPhrase = "";
   String description = "";
   double surface;
+  List<String> imagesURL = [];
 
   void operator []=(String variable, dynamic value) {
     switch (variable) {
@@ -13,6 +14,9 @@ class SellForm {
         break;
       case SellFormFields.SURFACE:
         surface = _doubleFormatter(value);
+        break;
+      case SellFormFields.IMAGES_URL:
+        imagesURL = value;
         break;
     }
   }
@@ -31,4 +35,5 @@ class SellFormFields {
   static const String CATCH_PHRASE = "catchPhrase";
   static const String DESCRIPTION = "description";
   static const String SURFACE = "surface";
+  static const String IMAGES_URL = "imagesURL";
 }
