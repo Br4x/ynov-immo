@@ -14,7 +14,7 @@ class CategoryList extends StatelessWidget {
       child: Text('Vous souhaitez :',
           style: TextStyle(
             fontSize: 22,
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.white,
           )
       )
   ));

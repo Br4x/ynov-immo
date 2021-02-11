@@ -30,7 +30,7 @@ try {
       title: 'Ynov Immo',
       theme: ThemeData(
         primaryColor: kPrimaryColor,
-        scaffoldBackgroundColor: null,
+        scaffoldBackgroundColor: Colors.blueGrey,
         textTheme: TextTheme(
           bodyText1: TextStyle(color: ksecondaryColor),
           bodyText2: TextStyle(color: ksecondaryColor),

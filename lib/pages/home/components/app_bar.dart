@@ -5,7 +5,7 @@ import 'package:ynov_immo/constants.dart';
 AppBar homeAppBar(BuildContext context) {
   return AppBar(
     centerTitle: true,
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.blueGrey,
     elevation: 1,
     leading: IconButton(
       icon: SvgPicture.asset("assets/icons/menu.svg"),
