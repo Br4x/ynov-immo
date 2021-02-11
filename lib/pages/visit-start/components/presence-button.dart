@@ -30,11 +30,10 @@ class PresenceButton extends StatelessWidget {
           child: InkWell(
             onTap: press,
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(width: 10),
                   Text(
                     title,
                     style: TextStyle(
@@ -63,7 +62,6 @@ class PresenceButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(width: 10),
                   Text(
                     title,
                     style: TextStyle(

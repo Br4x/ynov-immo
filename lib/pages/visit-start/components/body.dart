@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:ynov_immo/api.dart';
 import 'package:ynov_immo/pages/visit-start/components/presence-button.dart';
 import 'package:ynov_immo/pages/visit-start/components/start-button.dart';
+import 'package:ynov_immo/pages/visit-start/constants.dart';
+import 'package:ynov_immo/pages/visit-start/mock/fake-data.dart';
 
 import '../../../api.dart';
 import '../../../constants.dart';
@@ -15,60 +17,43 @@ class Body extends StatefulWidget {
 }
 
 class _BodyWidgetState extends State<Body> {
+  User _user;
+  RealEstate _realEstate;
   RealEstateVisit _realEstateVisit;
 
-  final user_mock = User.fromJson({
-    'id': 1
-  });
+  @override
+  void initState() {
+    // récupération du user
+    // mock
+    setState(() {
+      _user = userMock;
+    });
 
-  final realEstate_mock = RealEstate.fromJson({
-    'id': 1,
-    'accroche': 'Maison de campagne'
-  });
+    // récupération du real estate depuis la navigation de l'écran précédent
+    //RealEstate realEstate = ModalRoute.of(context).settings.arguments;
+    RealEstate realEstate;
+    // sinon mock
+    if (realEstate == null) {
+      realEstate = realEstateMock;
+    }
+    setState(() {
+      _realEstate = realEstate;
+    });
 
-  final realEstateVisit_mock = RealEstateVisit.fromJson({
-    'id': 1,
-    'id_real_estate': 1,
-    'id_booker': 0,
-    'id_visitor': 1,
-    'start_date': '2021-02-08T23:15:42.141Z',
-    'end_date': '2021-02-08T23:15:42.141Z',
-    'start_time': '2021-02-08T14:15:42.141Z',
-    'end_time': '2021-02-08T16:15:42.141Z',
-    'booker_is_ready': 0,
-    'visitor_is_ready': 0
-  });
-
-  final iAmHereSnackBar = SnackBar(content: Text("Votre présence est enregistrée !"));
-  final theyAreHereSnackBar = SnackBar(content: Text("Leur présence est enregistrée !"));
-  final bookerIsHereSnackBar = SnackBar(content: Text("Sa présence est enregistrée !"));
-  final startTheVisitSnackBar = SnackBar(content: Text("La visite peut commencer !"));
-  final visitorsAreHereSnackBar = SnackBar(content: Text("Les visiteurs sont là !"));
-  final agentIsHereSnackBar = SnackBar(content: Text("L'agent immobilier est là !"));
+    // récupération du real estate visit via l'API
+    // TODO implement API call
+    // mock
+    setState(() {
+      _realEstateVisit = realEstateVisitMock;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bool isBooker = _user.id == _realEstateVisit.idBooker;
 
-    formatDate(realEstateVisit_mock.startTime);
-
-
-    // récupération du real estate depuis la navigation de l'écran précédent
-    RealEstate realEstate = ModalRoute.of(context).settings.arguments;
-    // sinon mock
-    if (realEstate == null) {
-      realEstate = realEstate_mock;
-    }
-
-    // mock de real estate visit
-    if (_realEstateVisit == null) {
-      setState(() {
-        _realEstateVisit = realEstateVisit_mock;
-      });
-    }
-
-    final bool isBooker = userIsBooker(user_mock.id, realEstateVisit_mock);
-
-    setTimer(realEstate.id, isBooker);
+    setTimer(_realEstate.id, isBooker);
 
     return Container(
       child: Column(
@@ -79,7 +64,7 @@ class _BodyWidgetState extends State<Body> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Visite de \"${realEstate_mock.accroche}\"",
+                "Visite de \"${_realEstate.accroche}\"",
                 style: TextStyle(
                     color: kTextColor,
                     fontSize: 20,
@@ -96,7 +81,7 @@ class _BodyWidgetState extends State<Body> {
             ],
           ),
           Text(
-            "En commençant cette visite, vous attestez l'effectuer en la qualité d'agent immobilier.",
+            isBooker ? juridicBlabla : visitorsText,
             style: TextStyle(
               color: kTextColor,
               fontSize: 17,
@@ -112,17 +97,21 @@ class _BodyWidgetState extends State<Body> {
                 enabled: isBooker && _realEstateVisit.bookerIsReady == 0 || !isBooker && _realEstateVisit.visitorIsReady == 0,
               ),
               PresenceButton(
-                  title: isBooker ? "Les visiteurs sont là" : "L'agent est là",
-                  press: () => updateTheyAreHere(isBooker),
+                  title: isBooker && _realEstateVisit.visitorIsReady == 0 || !isBooker && _realEstateVisit.bookerIsReady == 0
+                      ? "..."
+                      : isBooker ? "Les visiteurs sont là" : "L'agent est là",
+                  press: null,
                   enabled: isBooker && _realEstateVisit.visitorIsReady == 0 || !isBooker && _realEstateVisit.bookerIsReady == 0
               )
             ],
           ),
-          StartButton(
+          isBooker
+              ? StartButton(
               title: "Commencer la visite",
-              press: () => Scaffold.of(context).showSnackBar(startTheVisitSnackBar),
+              press: () => Scaffold.of(context).showSnackBar(SnackBar(content: Text(theVisitCanStart))),
               enabled: _realEstateVisit.visitorIsReady == 1 && _realEstateVisit.bookerIsReady == 1,
           )
+              : Container()
         ],
       ),
     );
@@ -130,63 +119,48 @@ class _BodyWidgetState extends State<Body> {
 
   setTimer(int realEstateId, bool isBooker) {
     Timer.periodic(Duration(seconds: 1), (timer) {
-      // TODO récupérer real estate visit
-      final new_realEstateVisit_mock = RealEstateVisit.fromJson({
-        'id': 1,
-        'id_real_estate': 1,
-        'id_booker': 1,
-        'id_visitor': 0,
-        'start_date': '2021-02-08T23:15:42.141Z',
-        'end_date': '2021-02-08T23:15:42.141Z',
-        'start_time': '2021-02-08T14:15:42.141Z',
-        'end_time': '2021-02-08T15:15:42.141Z',
-        'booker_is_ready': 0,
-        'visitor_is_ready': 0
-      });
+      // TODO implement API call to get new real estate visit
+      // mock
+      RealEstateVisit newRealEstateVisit = newRealEstateVisitMock;
 
-      if (isBooker && realEstateVisit_mock.visitorIsReady == 0 && new_realEstateVisit_mock.visitorIsReady == 1) {
-        Scaffold.of(context).showSnackBar(visitorsAreHereSnackBar);
-      } else if (!isBooker && realEstateVisit_mock.bookerIsReady == 0 && new_realEstateVisit_mock.bookerIsReady == 1) {
-        Scaffold.of(context).showSnackBar(agentIsHereSnackBar);
+      // test les visiteurs sont là
+      int seconds = DateTime.now().second;
+      if (seconds == 30) {
+        newRealEstateVisit.visitorIsReady = 1;
       }
 
-      /*setState(() {
-        _realEstateVisit = new_realEstateVisit_mock;
-      });*/
+      if (isBooker && hasChanged(_realEstateVisit.visitorIsReady, newRealEstateVisit.visitorIsReady)) {
+
+        setState(() {
+          _realEstateVisit = newRealEstateVisit;
+        });
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text(visitorsAreHere)));
+
+      } else if (!isBooker && hasChanged(_realEstateVisit.bookerIsReady, newRealEstateVisit.bookerIsReady)) {
+
+        setState(() {
+          _realEstateVisit = newRealEstateVisit;
+        });
+        Scaffold.of(context).showSnackBar(SnackBar(content: Text(agentIsHere)));
+
+      }
     });
   }
 
-  userIsBooker(int userId, RealEstateVisit realEstateVisit) {
-    return userId == realEstateVisit.idBooker;
+  hasChanged(int before, int now) {
+    return before == 0 && now == 1;
   }
 
   updateIAmHere(bool isBooker) {
-    // TODO API CALL
-    if (isBooker) {
-      this.setState(() {
-        _realEstateVisit.bookerIsReady = 1;
-      });
-    } else {
-      this.setState(() {
-        _realEstateVisit.visitorIsReady = 1;
-      });
-    }
-    Scaffold.of(context).showSnackBar(iAmHereSnackBar);
-  }
+    this.setState(() {
+      isBooker ? _realEstateVisit.bookerIsReady = 1 : _realEstateVisit.visitorIsReady = 1;
+    });
 
-  updateTheyAreHere(bool isBooker) {
-    // TODO API CALL
-    if (isBooker) {
-      this.setState(() {
-        _realEstateVisit.visitorIsReady = 1;
-        Scaffold.of(context).showSnackBar(theyAreHereSnackBar);
-      });
-    } else {
-      this.setState(() {
-        _realEstateVisit.bookerIsReady = 1;
-        Scaffold.of(context).showSnackBar(bookerIsHereSnackBar);
-      });
-    }
+    // TODO implement API call to update real estate visit
+    // mock
+    realEstateVisitMock = _realEstateVisit;
+
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text(iAmHere)));
   }
 
   formatDate(DateTime date) {
