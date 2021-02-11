@@ -26,12 +26,12 @@ class HomeScreen extends StatelessWidget {
 
           GooeyCarousel(
             children: <Widget>[
-              Container(child: Body(), color: Colors.red),
-              Container(child: Body(),color: Colors.blue),
-              Container(child: Body(),color: Colors.green),
+              Container(child: Body(), color: Colors.teal),
+              Container(child: Body(), color: Colors.pink),
+              Container(child: Body(), color: Colors.deepPurpleAccent),
             ],
           )
-          ])
-      );
+     ])
+    );
   }
 }
