@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/constants.dart';
+import 'package:ynov_immo/pages/calendar/calendar-screen.dart';
 import 'package:ynov_immo/pages/home/home-screen.dart';
+import 'package:ynov_immo/pages/plan_visit/plan_visit-screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() => runApp(MyApp());
+void main() => initializeDateFormatting().then((_) => runApp(MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,7 +22,7 @@ class MyApp extends StatelessWidget {
           bodyText2: TextStyle(color: ksecondaryColor),
         ),
       ),
-      home: HomeScreen(),
+      home: CalendarScreen(),
     );
   }
 }
