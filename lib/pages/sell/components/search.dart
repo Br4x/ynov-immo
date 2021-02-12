@@ -45,8 +45,42 @@ class _SearchPageState extends State<SearchPage> {
       print(selected.geometry.coordinates[0]);
       print(selected.geometry.coordinates[1]);
       statefulMapController.centerOnPoint(LatLng(
-          selected.geometry.coordinates[0], selected.geometry.coordinates[1]));
-      // statefulMapController.switchTileLayer(TileLayerType.hike);
+          selected.geometry.coordinates[1], selected.geometry.coordinates[0]));
+      statefulMapController.addStatefulMarker(
+          name: "Mon bien",
+          statefulMarker: StatefulMarker(
+              height: 80.0,
+              width: 120.0,
+              state: <String, dynamic>{"showText": false},
+              point: LatLng(selected.geometry.coordinates[1],
+                  selected.geometry.coordinates[0]),
+              builder: (BuildContext context, Map<String, dynamic> state) {
+                Widget w;
+                final markerIcon = IconButton(
+                    icon: const Icon(Icons.location_on),
+                    onPressed: () => statefulMapController.mutateMarker(
+                        name: "Mon bien",
+                        property: "showText",
+                        value: !(state["showText"] as bool)));
+                if (state["showText"] == true) {
+                  w = Column(children: <Widget>[
+                    markerIcon,
+                    Container(
+                        child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              "Mon bien",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                  fontFamily: 'RobotoMono'),
+                            ))),
+                  ]);
+                } else {
+                  w = markerIcon;
+                }
+                return w;
+              }));
     });
   }
 
@@ -77,37 +111,23 @@ class _SearchPageState extends State<SearchPage> {
           _selectAddress(suggestion);
         },
       ),
-      Container(
-          width: 400,
-          height: 400,
-          child: FlutterMap(
-            mapController: mapController,
-            options: MapOptions(
-              center: LatLng(44.8521465, -0.6165271),
-              zoom: 16.0,
-            ),
-            layers: [
-              statefulMapController.tileLayer,
-              MarkerLayerOptions(markers: statefulMapController.markers),
-              // TileLayerOptions(
-              //     urlTemplate:
-              //         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              //     subdomains: ['a', 'b', 'c']),
-              // MarkerLayerOptions(
-              //   markers: [
-              //     Marker(
-              //       width: 20.0,
-              //       height: 20.0,
-              //       point: LatLng(selected.geometry.coordinates[0],
-              //           selected.geometry.coordinates[1]),
-              //       builder: (ctx) => Container(
-              //         child: FlutterLogo(),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-            ],
-          ))
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+            width: 400,
+            height: 400,
+            child: FlutterMap(
+              mapController: mapController,
+              options: MapOptions(
+                center: LatLng(44.8521465, -0.6165271),
+                zoom: 16.0,
+              ),
+              layers: [
+                statefulMapController.tileLayer,
+                MarkerLayerOptions(markers: statefulMapController.markers),
+              ],
+            )),
+      )
     ]);
   }
 
@@ -116,30 +136,4 @@ class _SearchPageState extends State<SearchPage> {
     sub.cancel();
     super.dispose();
   }
-
-  // FlutterMap _flutterMap(BuildContext context, double lat, double lng) {
-  //   return FlutterMap(
-  //     options: MapOptions(
-  //       center: LatLng(lat, lng),
-  //       zoom: 13.0,
-  //     ),
-  //     layers: [
-  //       TileLayerOptions(
-  //           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  //           subdomains: ['a', 'b', 'c']),
-  //       MarkerLayerOptions(
-  //         markers: [
-  //           Marker(
-  //             width: 40.0,
-  //             height: 40.0,
-  //             point: LatLng(lat, lng),
-  //             builder: (ctx) => Container(
-  //               child: FlutterLogo(),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
 }
