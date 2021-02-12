@@ -18,7 +18,7 @@ class _PropertyDescriptionState extends State<PropertyDescription> {
   final descriptionController = TextEditingController();
   final surfaceController = TextEditingController();
 
-  final RegExp decimalRegex = RegExp(r'(^\d*\.?\d{0,2})');
+  final RegExp decimalRegex = RegExp(r'(^\d*)');
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _PropertyDescriptionState extends State<PropertyDescription> {
             Text('Surface', style: CommonStyle.text()),
             TextField(
               decoration: CommonStyle.textFieldDecoration("Surface en m²"),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(decimalRegex)
               ],

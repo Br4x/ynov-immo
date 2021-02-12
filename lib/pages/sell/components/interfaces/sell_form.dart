@@ -1,7 +1,7 @@
 class SellForm {
   String catchPhrase = "";
   String description = "";
-  double surface;
+  int surface;
   List<String> imagesURL = [];
 
   void operator []=(String variable, dynamic value) {
@@ -13,7 +13,7 @@ class SellForm {
         description = value;
         break;
       case SellFormFields.SURFACE:
-        surface = _doubleFormatter(value);
+        surface = _integerFormatter(value);
         break;
       case SellFormFields.IMAGES_URL:
         imagesURL = value;
@@ -21,11 +21,11 @@ class SellForm {
     }
   }
 
-  double _doubleFormatter(dynamic value) {
-    if (value is double) return value;
+  int _integerFormatter(dynamic value) {
+    if (value is int) return value;
     if (value is String) {
       // TextInput listeners are called when entering the field
-      return value == "" ? null : double.parse(value);
+      return value == "" ? null : int.parse(value);
     }
     return null;
   }

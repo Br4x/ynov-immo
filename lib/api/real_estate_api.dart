@@ -234,7 +234,7 @@ class RealEstateApi {
   /// create real-estate
   ///
   /// create real-estate
-  Future<ApiResponse> realEstatePost(RealEstate body) async {
+  Future<ApiResponse> realEstatePost(RealEstate body, bool returnAsJson) async {
     Object postBody = body;
 
     // verify required params are set
@@ -277,6 +277,13 @@ class RealEstateApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
+      if (returnAsJson) {
+        ApiResponse apiResponse = apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
+        if (apiResponse.msg == null) {
+          apiResponse.msg = jsonDecode(response.body)["data"]["id"].toString();
+        }
+        return apiResponse;
+      }
       return 
           apiClient.deserialize(response.body, 'ApiResponse') as ApiResponse ;
     } else {
