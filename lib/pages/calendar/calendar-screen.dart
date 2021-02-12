@@ -2,6 +2,8 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:ynov_immo/pages/home/components/app_bar.dart';
+import 'package:time_picker_widget/time_picker_widget.dart';
+import 'package:time_range/time_range.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -15,12 +17,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
   DateTime startDate;
   DateTime endDate;
   DateTime pickedDate;
-  TimeOfDay pickedTime;
+  TimeOfDay pickedStartTime;
+  TimeOfDay pickedEndTime;
+  TimeOfDay startTime;
   TimeOfDay endTime;
+  bool endButtonIsEnabled = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = CalendarController();
     _getAvailabilities();
@@ -38,7 +42,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-                margin: const EdgeInsets.only(top: 50.0, bottom: 30),
+                margin: const EdgeInsets.only(top: 20.0, bottom: 20),
                 child: Center(
                     child: Text(
                   'Planifier une visite',
@@ -104,23 +108,40 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 calendarController: _controller,
                 enabledDayPredicate: _predicate),
             Container(
-              margin: const EdgeInsets.only(top: 45),
-              child: ButtonBar(
-                alignment: MainAxisAlignment.spaceEvenly,
-                buttonPadding: EdgeInsets.all(20),
-                children: <Widget>[
-                  RaisedButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Text(
-                      'Choisir une heure',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    color: Colors.orange,
-                    textColor: Colors.white,
-                    onPressed: _onTap,
+              margin: EdgeInsets.only(top: 30),
+              child: TimeRange(
+                  fromTitle: Text(
+                    'Heure de début',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
-                  RaisedButton(
+                  toTitle: Text(
+                    'Heure de fin',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  titlePadding: 20,
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.white),
+                  activeTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                  borderColor: Colors.transparent,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  activeBackgroundColor: Colors.orange,
+                  firstTime: startTime,
+                  lastTime: endTime,
+                  timeStep: 60,
+                  timeBlock: 60,
+                  onRangeCompleted: (range) => {
+                        setState(() => pickedStartTime = range.start),
+                        setState(() => pickedEndTime = range.end)
+                      }),
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 60),
+                child: Center(
+                  child: RaisedButton(
+                    textColor: Colors.white,
+                    padding: EdgeInsets.only(
+                        top: 15, left: 30, bottom: 15, right: 30),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Text(
@@ -128,51 +149,52 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       style: TextStyle(fontSize: 18),
                     ),
                     color: Colors.green,
-                    onPressed: () {
-                      // To do
-                    },
+                    onPressed: _onReserved,
                   ),
-                ],
-              ),
-            )
+                ))
           ],
         ),
       ),
     );
   }
 
-  _onTap() {
-    showDialog(
-        barrierDismissible: false,
+  _onReserved() {
+    if (pickedStartTime != null && pickedEndTime != null) {
+      print(pickedEndTime);
+    }
+  }
+
+  void _onChooseStartHour() {
+    showCustomTimePicker(
+            context: context,
+            helpText: 'Heure de début',
+            onFailValidation: (context) => showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(title: Text('Sélection invalide'));
+                }),
+            initialTime: startTime,
+            selectableTimePredicate: (time) =>
+                time.hour >= startTime.hour && time.hour <= endTime.hour)
+        .then((time) => {
+              setState(() => pickedStartTime = time),
+              setState(() => endButtonIsEnabled = true)
+            });
+  }
+
+  void _onChooseEndHour() {
+    showCustomTimePicker(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
-            title: Text('Le ' + DateFormat.yMMMd('fr_FR').format(pickedDate)),
-            content: Wrap(children: <Widget>[
-              new TextField(
-                decoration: new InputDecoration(hintText: "Heure de début"),
-                controller: _c1,
-                keyboardType: TextInputType.number,
-              ),
-              new TextField(
-                decoration: new InputDecoration(hintText: "Heure de fin"),
-                controller: _c2,
-                keyboardType: TextInputType.number,
-              )
-            ]),
-            actions: <Widget>[
-              FlatButton(
-                  child: Text('Valider', style: TextStyle(fontSize: 18))),
-              FlatButton(
-                  child: Text('Annuler', style: TextStyle(fontSize: 18)),
-                  onPressed: () => {Navigator.of(context).pop()})
-            ],
-            elevation: 24,
-            backgroundColor: Colors.white,
-          );
-        });
+        helpText: 'Heure de fin',
+        onFailValidation: (context) => showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(title: Text('Sélection invalide'));
+            }),
+        initialTime: startTime,
+        selectableTimePredicate: (time) {
+          return time.hour >= startTime.hour && time.hour <= endTime.hour;
+        }).then((time) => {setState(() => pickedEndTime = time)});
   }
 
   bool _predicate(DateTime day) {
@@ -192,7 +214,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       "price": 0,
       "start_date": "2021-02-05T10:32:46.251Z",
       "end_date": "2021-02-15T10:32:46.251Z",
-      "start_time": "2021-02-05T10:32:46.251Z"¨YYYYYYYYYYYYYYYYYYYYYYYYY                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIISX,xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy,
+      "start_time": "2021-02-05T10:32:46.251Z",
       "end_time": "2021-02-15T15:32:46.251Z"
     };
 
@@ -211,12 +233,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
         new DateFormat("yyyy-MM-dd'T'HH:mm").parse(end_time);
 
     start_time = TimeOfDay.fromDateTime(startTimeParsed);
-    end_time = TimeOfDay.fromDateTime(endTimeParsed);
+    end_time = TimeOfDay.fromDateTime(endTimeParsed).add(minutes: 30);
 
     setState(() {
       startDate = startDateParsed;
       endDate = endDateParsed;
-      pickedTime = start_time;
+      startTime = start_time;
       endTime = end_time;
     });
   }

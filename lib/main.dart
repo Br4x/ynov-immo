@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/constants.dart';
 import 'package:ynov_immo/pages/calendar/calendar-screen.dart';
-import 'package:ynov_immo/pages/home/home-screen.dart';
-import 'package:ynov_immo/pages/plan_visit/plan_visit-screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() => initializeDateFormatting().then((_) => runApp(MyApp()));
