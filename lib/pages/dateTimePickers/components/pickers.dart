@@ -35,24 +35,11 @@ void date() {
   // }
 
   try {
-    var resultuser = api_user.userIdGet(id);
-    print("User : ${resultuser}");
-    Future foo() async {
-      var val = await resultuser;
-      print("User : ${val}");
-    }
-
-    foo();
-  } catch (e) {
-    print("Exception when calling UserApi->userIdGet: $e\n");
-  }
-
-  try {
     var result = api_instance.realEstateAvailabilityIdGet(id);
-    print("Résultat : ${result}");
+    //Pour voir le resulat en Json
     Future foo() async {
       var val = await result;
-      print("Résultat : ${val}");
+      print("Résultat : $val");
     }
 
     foo();
@@ -63,17 +50,19 @@ void date() {
 }
 
 class _PickersState extends State<Pickers> {
+  //Variable for date
   DateTimeRange myDateRange;
   var startDate = DateTime.now();
   var endDate = DateTime.parse("2021-03-20 00:00:00Z");
   var price = 15;
-  static const double leftPadding = 15;
 
+  //Variable for time
+  TimeRangeResult _timeRange;
   final _defaultTimeRange = TimeRangeResult(
     TimeOfDay(hour: 8, minute: 00),
     TimeOfDay(hour: 9, minute: 00),
   );
-  TimeRangeResult _timeRange;
+  static const double leftPadding = 15;
 
   @override
   void initState() {
@@ -95,20 +84,21 @@ class _PickersState extends State<Pickers> {
         child: Form(
           key: myFormKey,
           child: Column(
-            children: [
+            children: <Widget>[
               SafeArea(
                 child: DateRangeField(
                     context: context,
                     decoration: InputDecoration(
-                      labelText: 'Date Range',
+                      labelText: 'Date',
                       prefixIcon: Icon(Icons.date_range),
-                      hintText: 'Please select a start and end date',
+                      hintText:
+                          'Veuillez sélectionner une date de début et de fin',
                       border: OutlineInputBorder(),
                     ),
                     initialValue: DateTimeRange(start: startDate, end: endDate),
                     validator: (value) {
                       if (value.start.isBefore(DateTime.now())) {
-                        return 'Please enter a valid date';
+                        return 'veuillez entrer une date valide';
                       }
                       return null;
                     },
@@ -173,11 +163,11 @@ class _PickersState extends State<Pickers> {
                       ],
                     ),
                   ),
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: const Text('Valider', style: TextStyle(fontSize: 20)),
                 ),
               ),
-              if (myDateRange != null) ...[
+              if (myDateRange != null && _timeRange != null) ...[
                 Container(
                     margin: EdgeInsets.only(top: 30),
                     alignment: Alignment.center,
@@ -300,7 +290,7 @@ class _PickersState extends State<Pickers> {
                     )),
                 Container(
                     width: 300,
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 10),
                     alignment: Alignment.bottomCenter,
                     child: RichText(
                       text: TextSpan(
@@ -321,7 +311,7 @@ class _PickersState extends State<Pickers> {
                       ),
                     )),
               ],
-              if (myDateRange == null) ...[
+              if (myDateRange == null && _timeRange == null) ...[
                 Container(
                     margin: EdgeInsets.only(top: 30),
                     alignment: Alignment.center,

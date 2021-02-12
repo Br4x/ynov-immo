@@ -3,7 +3,7 @@ import 'package:ynov_immo/pages/dateTimePickers/components/app_bar.dart';
 import 'package:ynov_immo/pages/dateTimePickers/components/body.dart';
 import 'package:ynov_immo/api.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreenPickers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

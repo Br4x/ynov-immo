@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
 
 class ItemCard extends StatelessWidget {
@@ -44,11 +43,6 @@ class ItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: kPrimaryColor.withOpacity(0.13),
                     shape: BoxShape.circle,
-                  ),
-                  child: SvgPicture.asset(
-                    svgSrc,
-                    width: size.width * 0.18,
-                    // size.width * 0.18 means it use 18% of total width
                   ),
                 ),
                 Text(title),

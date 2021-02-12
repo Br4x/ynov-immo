@@ -9,8 +9,8 @@ class Body extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CategoryList(),
-          ItemList(),
+          // CategoryList(),
+          // ItemList(),
         ],
       ),
     );

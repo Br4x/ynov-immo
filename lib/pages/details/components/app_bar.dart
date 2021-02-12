@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/pages/home/home-screen.dart';
 
 AppBar detailsAppBar(BuildContext context) {
@@ -21,15 +20,6 @@ AppBar detailsAppBar(BuildContext context) {
         );
       },
     ),
-    actions: <Widget>[
-      IconButton(
-        icon: SvgPicture.asset("assets/icons/share.svg"),
-        onPressed: () {},
-      ),
-      IconButton(
-        icon: SvgPicture.asset("assets/icons/more.svg"),
-        onPressed: () {},
-      ),
-    ],
+    actions: <Widget>[],
   );
 }
