@@ -16,6 +16,13 @@ class CommonStyle {
     );
   }
 
+  static TextStyle errorText() {
+    return TextStyle(
+      fontSize: 11,
+      color: Colors.redAccent
+    );
+  }
+
   static TextStyle titleText() {
     return TextStyle(
       fontWeight: FontWeight.bold,

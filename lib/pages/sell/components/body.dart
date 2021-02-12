@@ -22,6 +22,8 @@ class _BodyState extends State<Body> {
 
   SellForm sellForm = new SellForm();
 
+  bool isPostFormInvalid = false;
+
   callback(String variable, dynamic value) {
     setState(() {
       sellForm[variable] = value;
@@ -53,6 +55,13 @@ class _BodyState extends State<Body> {
                 color: Colors.deepOrange
               )
             ),
+            if (isPostFormInvalid) (
+              Text(
+                  "Une erreur est survenu pendant l'envoi de vos données, veuillez réessayer plus tard ou contacter un administrateur",
+                  style: CommonStyle.errorText(),
+                  textAlign: TextAlign.center,
+              )
+            ),
             Separator()
           ],
         )
@@ -63,13 +72,14 @@ class _BodyState extends State<Body> {
     final ApiResponse response = await _realEstateApi.realEstatePost(_mapSellFormToRealEstateModel(), true);
 
     if (response.code == 0) {
-      print("Une erreur est survenue");
-      // Afficher un message d'erreur sur l'interface graphique
+      setState(() {
+        isPostFormInvalid = true;
+      });
     } else {
       // Tout s'est bien passé, la variable "msg" nous retourne l'id de la propriété crée
       final int id = int.parse(response.msg);
 
-      // Envoyer les photos
+      // Envoyer les photos une par une car on ne peut pas envoyer de liste
       for (String imageURL in sellForm.imagesURL) {
         final http.Response response = await http.get(imageURL);
         if (response.statusCode == 200) {
