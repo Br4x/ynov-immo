@@ -40,7 +40,7 @@ class _BodyState extends State<Body> {
             Separator(),
 
             Text("Adresse", style: CommonStyle.text()),
-            SearchPage(),
+            SearchPage(setParentState: callback),
             Separator(),
 
             PropertyImages(setParentState: callback),
@@ -90,11 +90,11 @@ class _BodyState extends State<Body> {
     realEstate.description = sellForm.description;
     realEstate.size = sellForm.surface;
     realEstate.price = 1000;
-    realEstate.address = "x rue des yyy";
-    realEstate.zipCode = "33000";
-    realEstate.city = "Bordeaux";
-    realEstate.latitude = "45412.23";
-    realEstate.longitude = "78452.33";
+    realEstate.address = sellForm.address;
+    realEstate.zipCode = sellForm.zipCode;
+    realEstate.city = sellForm.city;
+    realEstate.latitude = sellForm.latitude;
+    realEstate.longitude = sellForm.longitude;
     realEstate.energyClass = "A";
     realEstate.gesClass = "A";
     realEstate.hasGarden = 0;

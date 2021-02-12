@@ -7,9 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:ynov_immo/model/search_address.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:map_controller/map_controller.dart';
+import 'package:ynov_immo/pages/sell/components/interfaces/sell_form.dart';
 import 'package:ynov_immo/pages/sell/components/style/common_style.dart';
 
 class SearchPage extends StatefulWidget {
+  final Function(String, dynamic) setParentState;
+
+  const SearchPage({Key key, this.setParentState}) : super(key: key);
+
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -43,18 +48,17 @@ class _SearchPageState extends State<SearchPage> {
   void _selectAddress(suggestion) {
     setState(() {
       selected = suggestion;
-      print(selected.geometry.coordinates[0]);
-      print(selected.geometry.coordinates[1]);
-      statefulMapController.centerOnPoint(LatLng(
-          selected.geometry.coordinates[1], selected.geometry.coordinates[0]));
+      final double longitude = selected.geometry.coordinates[0];
+      final double latitude = selected.geometry.coordinates[1];
+
+      statefulMapController.centerOnPoint(LatLng(latitude, longitude));
       statefulMapController.addStatefulMarker(
           name: "Mon bien",
           statefulMarker: StatefulMarker(
               height: 80.0,
               width: 120.0,
               state: <String, dynamic>{"showText": false},
-              point: LatLng(selected.geometry.coordinates[1],
-                  selected.geometry.coordinates[0]),
+              point: LatLng(latitude, longitude),
               builder: (BuildContext context, Map<String, dynamic> state) {
                 Widget w;
                 final markerIcon = IconButton(
@@ -81,7 +85,15 @@ class _SearchPageState extends State<SearchPage> {
                   w = markerIcon;
                 }
                 return w;
-              }));
+              }
+          )
+      );
+
+      widget.setParentState(SellFormFields.ADDRESS, selected.properties.housenumber + " " + selected.properties.street);
+      widget.setParentState(SellFormFields.ZIP_CODE, selected.properties.postcode);
+      widget.setParentState(SellFormFields.CITY, selected.properties.city);
+      widget.setParentState(SellFormFields.LATITUDE, latitude.toString());
+      widget.setParentState(SellFormFields.LONGITUDE, longitude.toString());
     });
   }
 
