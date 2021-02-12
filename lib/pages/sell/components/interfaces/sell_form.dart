@@ -10,6 +10,15 @@ class SellForm {
 
 
   List<String> imagesURL = [];
+  bool garden;
+  bool exposedStone;
+  bool cimentTiles;
+  bool parquetFloor;
+  String type;
+  int nbPiece;
+  int nbChambre;
+  String energie;
+  String ges;
 
   void operator []=(String variable, dynamic value) {
     switch (variable) {
@@ -40,6 +49,33 @@ class SellForm {
       case SellFormFields.IMAGES_URL:
         imagesURL = value;
         break;
+      case SellFormFields.GARDEN:
+        garden = value;
+        break;
+      case SellFormFields.EXPOSED_STONE:
+        exposedStone = value;
+        break;
+      case SellFormFields.CIMENT_TILES:
+        cimentTiles = value;
+        break;
+      case SellFormFields.PARQUET_FLOOR:
+        parquetFloor = value;
+        break;
+      case SellFormFields.TYPE:
+        type = value;
+        break;
+      case SellFormFields.NB_PIECE:
+        nbPiece = _intFormatter(value);
+        break;
+      case SellFormFields.NB_CHAMBRE:
+        nbChambre = _intFormatter(value);
+        break;
+      case SellFormFields.ENERGIE:
+        energie = value;
+        break;
+      case SellFormFields.GES:
+        ges = value;
+        break;
     }
   }
 
@@ -64,4 +100,13 @@ class SellFormFields {
   static const String LONGITUDE = "longitude";
 
   static const String IMAGES_URL = "imagesURL";
+  static const String GARDEN = "garden";
+  static const String EXPOSED_STONE = "exposedStone";
+  static const String CIMENT_TILES = "cimentTiles";
+  static const String PARQUET_FLOOR = "parquetFloor";
+  static const String TYPE = "type";
+  static const String NB_PIECE = "nbPiece";
+  static const String NB_CHAMBRE = "nbChambre";
+  static const String ENERGIE = "energie";
+  static const String GES = "ges";
 }

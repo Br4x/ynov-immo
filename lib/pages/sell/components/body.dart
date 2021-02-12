@@ -4,6 +4,7 @@ import 'package:ynov_immo/pages/sell/components/interfaces/sell_form.dart';
 import 'package:ynov_immo/pages/sell/components/miscellaeneous/separator.dart';
 import 'package:ynov_immo/pages/sell/components/page_title.dart';
 import 'package:ynov_immo/pages/sell/components/property_description.dart';
+import 'package:ynov_immo/pages/sell/components/property_sell.dart';
 import 'package:ynov_immo/pages/sell/components/search.dart';
 import 'package:ynov_immo/pages/sell/components/property_images/property_images.dart';
 import 'package:ynov_immo/pages/sell/components/style/common_style.dart';
