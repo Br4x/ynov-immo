@@ -14,13 +14,13 @@ class ChatCommentPagination {
   int limit = null;
   
 
-  List<ChatComment> list = [];
+  List<ChatComment> data = [];
   
   ChatCommentPagination();
 
   @override
   String toString() {
-    return 'ChatCommentPagination[code=$code, total=$total, offset=$offset, limit=$limit, list=$list, ]';
+    return 'ChatCommentPagination[code=$code, total=$total, offset=$offset, limit=$limit, data=$data, ]';
   }
 
   ChatCommentPagination.fromJson(Map<String, dynamic> json) {
@@ -37,8 +37,8 @@ class ChatCommentPagination {
     limit =
         json['limit']
     ;
-    list =
-      ChatComment.listFromJson(json['list'])
+    data =
+      ChatComment.listFromJson(json['data'])
 ;
   }
 
@@ -48,7 +48,7 @@ class ChatCommentPagination {
       'total': total,
       'offset': offset,
       'limit': limit,
-      'list': list
+      'data': data
      };
   }
 

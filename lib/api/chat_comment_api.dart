@@ -10,7 +10,7 @@ class ChatCommentApi {
   /// get all chat-comment by pagination
   ///
   /// 
-  Future<List<ChatCommentPagination>> chatCommentGet({ List<String> where, String fields, String order, int offset, int limit }) async {
+  Future<ChatCommentPagination> chatCommentGet({ List<String> where, String fields, String order, int offset, int limit }) async {
     Object postBody = null;
 
     // verify required params are set
@@ -65,8 +65,7 @@ class ChatCommentApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return 
-        (apiClient.deserialize(response.body, 'List<ChatCommentPagination>') as List).map((item) => item as ChatCommentPagination).toList();
+      return apiClient.deserialize(response.body, 'ChatCommentPagination') as ChatCommentPagination;
     } else {
       return null;
     }

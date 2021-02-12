@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
-import 'package:ynov_immo/pages/chat/chat-screen.dart';
 
 AppBar homeAppBar(BuildContext context) {
   return AppBar(
@@ -9,12 +8,9 @@ AppBar homeAppBar(BuildContext context) {
     backgroundColor: Colors.white,
     elevation: 1,
     leading: IconButton(
-      icon: SvgPicture.asset("assets/icons/menu.svg"),
+      icon: SvgPicture.asset("assets/icons/home.svg"),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ChatScreen())
-        );
+        Navigator.pop(context);
       },
     ),
     title: RichText(
