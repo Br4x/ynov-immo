@@ -3,7 +3,6 @@
 *.log
 *.pyc
 *.swp
-*.lock
 ios/
 .DS_Store
 .atom/
@@ -37,3 +36,8 @@ lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+ios/Runner.xcodeproj/project.pbxproj
+ios/Runner.xcworkspace/contents.xcworkspacedata
+pubspec.lock
