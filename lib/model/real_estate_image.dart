@@ -10,7 +10,7 @@ class RealEstateImage {
 /* Url de l'image */
   String url = null;
   
-  RealEstateImage();
+  RealEstateImage({int id, int idRealEstate, String url}): id=id, idRealEstate=idRealEstate, url=url;
 
   @override
   String toString() {
@@ -18,6 +18,7 @@ class RealEstateImage {
   }
 
   RealEstateImage.fromJson(Map<String, dynamic> json) {
+    // json = json['data'];
     if (json == null) return;
     id =
         json['id']

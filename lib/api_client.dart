@@ -16,7 +16,7 @@ class ApiClient {
   Map<String, Authentication> _authentications = {};
 
   final _RegList = new RegExp(r'^List<(.*)>$');
-  final _RegMap = new RegExp(r'^Map<String,(.*)>$');
+  final _RegMap = new RegExp(r'^Map<(.*)>$');
 
   ApiClient({this.basePath: "https://ynov-api.ew.r.appspot.com/api/v1"}) {
     // Setup authentications (key: authentication name, value: authentication).
@@ -92,6 +92,7 @@ class ApiClient {
         default:
           {
             Match match;
+            value = value['data'];
             if (value is List &&
                 (match = _RegList.firstMatch(targetType)) != null) {
               var newTargetType = match[1];

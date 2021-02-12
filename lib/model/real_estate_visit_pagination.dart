@@ -24,6 +24,7 @@ class RealEstateVisitPagination {
   }
 
   RealEstateVisitPagination.fromJson(Map<String, dynamic> json) {
+    // json = json['data'];
     if (json == null) return;
     code =
         json['code']
