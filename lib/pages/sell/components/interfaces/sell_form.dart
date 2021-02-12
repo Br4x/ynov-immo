@@ -8,7 +8,6 @@ class SellForm {
   String latitude = "";
   String longitude = "";
 
-
   List<String> imagesURL = [];
   bool garden;
   bool exposedStone;
@@ -19,6 +18,7 @@ class SellForm {
   int nbChambre;
   String energie;
   String ges;
+  int prix;
 
   void operator []=(String variable, dynamic value) {
     switch (variable) {
@@ -30,6 +30,9 @@ class SellForm {
         break;
       case SellFormFields.SURFACE:
         surface = _integerFormatter(value);
+        break;
+      case SellFormFields.PRIX:
+        prix = _integerFormatter(value);
         break;
       case SellFormFields.ADDRESS:
         address = value;
@@ -65,10 +68,10 @@ class SellForm {
         type = value;
         break;
       case SellFormFields.NB_PIECE:
-        nbPiece = _intFormatter(value);
+        nbPiece = _integerFormatter(value);
         break;
       case SellFormFields.NB_CHAMBRE:
-        nbChambre = _intFormatter(value);
+        nbChambre = _integerFormatter(value);
         break;
       case SellFormFields.ENERGIE:
         energie = value;
@@ -93,6 +96,7 @@ class SellFormFields {
   static const String CATCH_PHRASE = "catchPhrase";
   static const String DESCRIPTION = "description";
   static const String SURFACE = "surface";
+  static const String PRIX = "prix";
   static const String ADDRESS = "address";
   static const String ZIP_CODE = "zipCode";
   static const String CITY = "city";

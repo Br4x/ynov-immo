@@ -38,39 +38,34 @@ class _BodyState extends State<Body> {
         child: ListView(
           children: [
             PageTitle(),
-
             PropertyDescription(setParentState: callback),
             Separator(),
-
             Text("Adresse", style: CommonStyle.text()),
             SearchPage(setParentState: callback),
             Separator(),
-
             PropertyImages(setParentState: callback),
-
+            Separator(),
+            PropertySell(setParentState: callback),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-              child: OutlineButton(
-                onPressed: _submitSellForm,
-                child: Text("Valider", style: CommonStyle.text()),
-                color: Colors.deepOrange
-              )
-            ),
-            if (isPostFormInvalid) (
-              Text(
-                  "Une erreur est survenu pendant l'envoi de vos données, veuillez réessayer plus tard ou contacter un administrateur",
-                  style: CommonStyle.errorText(),
-                  textAlign: TextAlign.center,
-              )
-            ),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                child: OutlineButton(
+                    onPressed: _submitSellForm,
+                    child: Text("Valider", style: CommonStyle.text()),
+                    color: Colors.deepOrange)),
+            if (isPostFormInvalid)
+              (Text(
+                "Une erreur est survenu pendant l'envoi de vos données, veuillez réessayer plus tard ou contacter un administrateur",
+                style: CommonStyle.errorText(),
+                textAlign: TextAlign.center,
+              )),
             Separator()
           ],
-        )
-    );
+        ));
   }
 
   void _submitSellForm() async {
-    final ApiResponse response = await _realEstateApi.realEstatePost(_mapSellFormToRealEstateModel(), true);
+    final ApiResponse response = await _realEstateApi.realEstatePost(
+        _mapSellFormToRealEstateModel(), true);
 
     if (response.code == 0) {
       setState(() {
@@ -84,7 +79,8 @@ class _BodyState extends State<Body> {
       for (String imageURL in sellForm.imagesURL) {
         final http.Response response = await http.get(imageURL);
         if (response.statusCode == 200) {
-          await _realEstateImageApi.realEstateImagePost(_mapUrlToRealEstateImageModel(id, imageURL));
+          await _realEstateImageApi
+              .realEstateImagePost(_mapUrlToRealEstateImageModel(id, imageURL));
         }
       }
     }
@@ -95,23 +91,23 @@ class _BodyState extends State<Body> {
     realEstate.id = null;
     realEstate.idUser = 1;
     realEstate.accroche = sellForm.catchPhrase;
-    realEstate.type = 'apartment';
-    realEstate.nbRooms = 1;
-    realEstate.nbBedroom = 1;
+    realEstate.type = sellForm.type;
+    realEstate.nbRooms = sellForm.nbPiece;
+    realEstate.nbBedroom = sellForm.nbChambre;
     realEstate.description = sellForm.description;
     realEstate.size = sellForm.surface;
-    realEstate.price = 1000;
+    realEstate.price = sellForm.prix;
     realEstate.address = sellForm.address;
     realEstate.zipCode = sellForm.zipCode;
     realEstate.city = sellForm.city;
     realEstate.latitude = sellForm.latitude;
     realEstate.longitude = sellForm.longitude;
-    realEstate.energyClass = "A";
-    realEstate.gesClass = "A";
-    realEstate.hasGarden = 0;
-    realEstate.hasExposedStone = 0;
-    realEstate.hasCimentTiles = 0;
-    realEstate.hasParquetFloor = 1;
+    realEstate.energyClass = sellForm.energie;
+    realEstate.gesClass = sellForm.ges;
+    realEstate.hasGarden = sellForm.garden ? 1 : 0;
+    realEstate.hasExposedStone = sellForm.exposedStone ? 1 : 0;
+    realEstate.hasCimentTiles = sellForm.cimentTiles ? 1 : 0;
+    realEstate.hasParquetFloor = sellForm.parquetFloor ? 1 : 0;
     return realEstate;
   }
 

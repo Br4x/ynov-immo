@@ -31,60 +31,70 @@ class _PropertyDescriptionState extends State<PropertyDescription> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                child: Text('Phrase d\'accroche', style: CommonStyle.text())
-              ),
-              Tooltip(
-                message: "Mets une bonne phrase pour attirer des clients!",
-                child: new Icon(Icons.help),
-              )
-            ],
-          ),
-          TextField(
-            decoration: CommonStyle.textFieldDecoration("Ligne d'accroche"),
-            controller: catchPhraseController,
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(100)
-            ],
-          ),
-          Separator(),
-
-          Text('Description', style: CommonStyle.text()),
-          TextField(
-            decoration: CommonStyle.textFieldDecoration("Description du bien"),
-            keyboardType: TextInputType.multiline,
-            maxLines: 7,
-            controller: descriptionController,
-          ),
-          Separator(),
-
-          Text('Surface', style: CommonStyle.text()),
-          TextField(
-            decoration: CommonStyle.textFieldDecoration("Surface en m²"),
-            keyboardType: TextInputType.numberWithOptions(decimal: false),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(decimalRegex)
-            ],
-            controller: surfaceController,
-          )
-        ],
-      )
-    );
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    child:
+                        Text('Phrase d\'accroche', style: CommonStyle.text())),
+                Tooltip(
+                  message: "Mets une bonne phrase pour attirer des clients!",
+                  child: new Icon(Icons.help),
+                )
+              ],
+            ),
+            TextField(
+              decoration: CommonStyle.textFieldDecoration("Ligne d'accroche"),
+              controller: catchPhraseController,
+              inputFormatters: [LengthLimitingTextInputFormatter(100)],
+            ),
+            Separator(),
+            Text('Description', style: CommonStyle.text()),
+            TextField(
+              decoration:
+                  CommonStyle.textFieldDecoration("Description du bien"),
+              keyboardType: TextInputType.multiline,
+              maxLines: 7,
+              controller: descriptionController,
+            ),
+            Separator(),
+            Text('Surface', style: CommonStyle.text()),
+            TextField(
+              decoration: CommonStyle.textFieldDecoration("Surface en m²"),
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(decimalRegex)
+              ],
+              controller: surfaceController,
+            ),
+            Separator(),
+            Text('Prix', style: CommonStyle.text()),
+            TextField(
+              decoration: CommonStyle.textFieldDecoration("Prix en euros"),
+              keyboardType: TextInputType.numberWithOptions(decimal: false),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(decimalRegex)
+              ],
+              onChanged: (newValue) {
+                widget.setParentState(SellFormFields.PRIX, newValue);
+              },
+            ),
+          ],
+        ));
   }
 
   void _catchPhraseListener() {
-    widget.setParentState(SellFormFields.CATCH_PHRASE, catchPhraseController.text);
+    widget.setParentState(
+        SellFormFields.CATCH_PHRASE, catchPhraseController.text);
   }
 
   void _descriptionListener() {
-    widget.setParentState(SellFormFields.DESCRIPTION, descriptionController.text);
+    widget.setParentState(
+        SellFormFields.DESCRIPTION, descriptionController.text);
   }
 
   void _surfaceListener() {
