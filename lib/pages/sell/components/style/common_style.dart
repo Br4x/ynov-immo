@@ -16,13 +16,14 @@ class CommonStyle {
 
   static TextStyle errorText() {
     return TextStyle(
-      fontSize: 11,
-      color: Colors.redAccent
-    );
+        fontSize: 11, color: Colors.redAccent, fontFamily: 'RobotoMono');
   }
 
   static TextStyle titleText() {
     return TextStyle(
-        fontWeight: FontWeight.bold, fontSize: 24, fontFamily: 'RobotoMono');
+        fontWeight: FontWeight.bold,
+        fontSize: 24,
+        fontFamily: 'RobotoMono',
+        color: Colors.black);
   }
 }

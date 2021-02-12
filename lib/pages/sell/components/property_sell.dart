@@ -40,7 +40,7 @@ class _PropertySellState extends State<PropertySell> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
       child: Column(
         children: [
           Row(
@@ -128,49 +128,45 @@ class _PropertySellState extends State<PropertySell> {
             }).toList(),
           ),
           Separator(),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-            child: Container(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 160,
-                    child: TextField(
-                      decoration: CommonStyle.textFieldDecoration("Nb Pièces"),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(decimalRegex)
-                      ],
-                      // controller: catchPhraseController,
-                      onChanged: (newValue) {
-                        setState(() {
-                          nbPiece = newValue;
-                        });
-                      },
-                    ),
+          Container(
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 160,
+                  child: TextField(
+                    decoration: CommonStyle.textFieldDecoration("Nb Pièces"),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(decimalRegex)
+                    ],
+                    // controller: catchPhraseController,
+                    onChanged: (newValue) {
+                      setState(() {
+                        nbPiece = newValue;
+                      });
+                    },
                   ),
-                  SeparatorHorizontal(),
-                  SizedBox(
-                    width: 180,
-                    child: TextField(
-                      decoration:
-                          CommonStyle.textFieldDecoration("Nb Chambres"),
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(decimalRegex)
-                      ],
-                      // controller: catchPhraseController,
-                      onChanged: (newValue) {
-                        setState(() {
-                          nbChambre = newValue;
-                        });
-                      },
-                    ),
-                  )
-                ],
-              ),
+                ),
+                SeparatorHorizontal(),
+                SizedBox(
+                  width: 160,
+                  child: TextField(
+                    decoration: CommonStyle.textFieldDecoration("Nb Chambres"),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(decimalRegex)
+                    ],
+                    // controller: catchPhraseController,
+                    onChanged: (newValue) {
+                      setState(() {
+                        nbChambre = newValue;
+                      });
+                    },
+                  ),
+                )
+              ],
             ),
           ),
           Padding(

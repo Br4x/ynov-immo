@@ -47,11 +47,28 @@ class _BodyState extends State<Body> {
             Separator(),
             PropertySell(setParentState: callback),
             Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                child: OutlineButton(
-                    onPressed: _submitSellForm,
-                    child: Text("Valider", style: CommonStyle.text()),
-                    color: Colors.deepOrange)),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                    side: BorderSide(color: Colors.black, width: 2),
+                    // primary: Colors.black,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Colors.deepOrange,
+                    padding: EdgeInsets.all(8.0),
+                    minimumSize: Size(150, 50)),
+                onPressed: _submitSellForm,
+                child: Text(
+                  "Mettre en vente",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'RobotoMono',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
             if (isPostFormInvalid)
               (Text(
                 "Une erreur est survenu pendant l'envoi de vos données, veuillez réessayer plus tard ou contacter un administrateur",
