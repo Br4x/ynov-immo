@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:ynov_immo/model/search_address.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:map_controller/map_controller.dart';
+import 'package:ynov_immo/pages/sell/components/style/common_style.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -89,10 +90,9 @@ class _SearchPageState extends State<SearchPage> {
     return Column(children: [
       TypeAheadField(
         textFieldConfiguration: TextFieldConfiguration(
-            autofocus: true,
             style: DefaultTextStyle.of(context).style.copyWith(
                 fontStyle: FontStyle.italic, fontFamily: 'RobotoMono'),
-            decoration: InputDecoration(border: OutlineInputBorder()),
+            decoration: CommonStyle.textFieldDecoration(""),
             controller: this._typeAheadController),
         suggestionsCallback: (data) async {
           var list = await http.get(Uri.encodeFull(

@@ -6,6 +6,8 @@ import 'package:ynov_immo/pages/sell/components/page_title.dart';
 import 'package:ynov_immo/pages/sell/components/property_description.dart';
 import 'package:ynov_immo/pages/sell/components/search.dart';
 import 'package:ynov_immo/pages/sell/components/property_images/property_images.dart';
+import 'package:ynov_immo/pages/sell/components/style/common_style.dart';
+import 'package:http/http.dart' as http;
 
 class Body extends StatefulWidget {
   const Body({Key key}) : super(key: key);
@@ -28,26 +30,32 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        PageTitle(),
-        PropertyDescription(setParentState: callback),
-        Text(
-          "Adresse",
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: 14.0,
-            color: Colors.black,
-          ),
-        ),
-        SearchPage(),
-        PropertyImages(setParentState: callback),
-        OutlineButton(
-          onPressed: _submitSellForm,
-          child: Text("Valider")
-        ),
-        Separator()
-      ],
+    return Padding(
+        padding: EdgeInsets.all(25.0),
+        child: ListView(
+          children: [
+            PageTitle(),
+
+            PropertyDescription(setParentState: callback),
+            Separator(),
+
+            Text("Adresse", style: CommonStyle.text()),
+            SearchPage(),
+            Separator(),
+
+            PropertyImages(setParentState: callback),
+
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              child: OutlineButton(
+                onPressed: _submitSellForm,
+                child: Text("Valider", style: CommonStyle.text()),
+                color: Colors.deepOrange
+              )
+            ),
+            Separator()
+          ],
+        )
     );
   }
 
@@ -63,7 +71,10 @@ class _BodyState extends State<Body> {
 
       // Envoyer les photos
       for (String imageURL in sellForm.imagesURL) {
-        await _realEstateImageApi.realEstateImagePost(_mapUrlToRealEstateImageModel(id, imageURL));
+        final http.Response response = await http.get(imageURL);
+        if (response.statusCode == 200) {
+          await _realEstateImageApi.realEstateImagePost(_mapUrlToRealEstateImageModel(id, imageURL));
+        }
       }
     }
   }

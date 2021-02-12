@@ -12,7 +12,7 @@ class _PageTitleState extends State<PageTitle> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+      padding: EdgeInsets.symmetric(vertical: 16),
       child: Text(
         "Mettre en vente",
         textAlign: TextAlign.center,

@@ -32,49 +32,49 @@ class _PropertyDescriptionState extends State<PropertyDescription> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Padding(
-        padding: EdgeInsets.all(25.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  child: Text('Phrase d\'accroche', style: CommonStyle.text())
-                ),
-                Tooltip(
-                  message: "Mets une bonne phrase pour attirer des clients!",
-                  child: new Icon(Icons.help),
-                )
-              ],
-            ),
-            TextField(
-              decoration: CommonStyle.textFieldDecoration("Ligne d'accroche"),
-              controller: catchPhraseController,
-            ),
-            Separator(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                child: Text('Phrase d\'accroche', style: CommonStyle.text())
+              ),
+              Tooltip(
+                message: "Mets une bonne phrase pour attirer des clients!",
+                child: new Icon(Icons.help),
+              )
+            ],
+          ),
+          TextField(
+            decoration: CommonStyle.textFieldDecoration("Ligne d'accroche"),
+            controller: catchPhraseController,
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(100)
+            ],
+          ),
+          Separator(),
 
-            Text('Description', style: CommonStyle.text()),
-            TextField(
-              decoration: CommonStyle.textFieldDecoration("Description du bien"),
-              keyboardType: TextInputType.multiline,
-              maxLines: 7,
-              controller: descriptionController,
-            ),
-            Separator(),
+          Text('Description', style: CommonStyle.text()),
+          TextField(
+            decoration: CommonStyle.textFieldDecoration("Description du bien"),
+            keyboardType: TextInputType.multiline,
+            maxLines: 7,
+            controller: descriptionController,
+          ),
+          Separator(),
 
-            Text('Surface', style: CommonStyle.text()),
-            TextField(
-              decoration: CommonStyle.textFieldDecoration("Surface en m²"),
-              keyboardType: TextInputType.numberWithOptions(decimal: false),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(decimalRegex)
-              ],
-              controller: surfaceController,
-            )
-          ],
-        ),
+          Text('Surface', style: CommonStyle.text()),
+          TextField(
+            decoration: CommonStyle.textFieldDecoration("Surface en m²"),
+            keyboardType: TextInputType.numberWithOptions(decimal: false),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(decimalRegex)
+            ],
+            controller: surfaceController,
+          )
+        ],
       )
     );
   }
