@@ -1,3 +1,4 @@
+import 'package:ynov_immo/api.dart';
 import 'package:ynov_immo/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/home/home-screen.dart';
@@ -19,19 +20,21 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   RealEstateVisitApi _realEstateVisitApi = new RealEstateVisitApi();
   RealEstateVisit _realEstateVisit = new RealEstateVisit();
-  RealEstate _realEstate = new RealEstate();
-  
+  RealEstateApi _realEstateApi = new RealEstateApi();
+  UserApi _userApi = new UserApi();
+
   bool isPostFormInvalid = false;
 
-  get checkedValue => true;
 
   @override
   Widget build(BuildContext context) {
+    var _realEstateTest;
+    _realEstateApi.realEstateIdGet(0).then((value) => {_realEstateTest = value});
     return Padding(
       padding: EdgeInsets.all(25),
       child: ListView(
         children: [
-          TitleImmo(titleImmo: "titleImmo", subTitleImmo: "subTitleImmo"),
+          TitleImmo(titleImmo: "{_userApi.userIdGet(_realEstateTest.accroche)}", subTitleImmo: "X km de chez vous"),
           RichText(
               text: TextSpan(
                   style: Theme.of(context)
@@ -44,7 +47,7 @@ class _BodyState extends State<Body> {
                   style: TextStyle(color: ksecondaryColor),
                 ),
                 TextSpan(
-                  text: "{Jean michel}",
+                  text: "{_realEstateTest.idUser}",
                   style: TextStyle(color: ksecondaryColor),
                 ),
               ])),
@@ -64,7 +67,7 @@ class _BodyState extends State<Body> {
                   style: TextStyle(color: ksecondaryColor),
                 ),
                 TextSpan(
-                  text: "{price}/visite",
+                  text: "{_realEstateTest.price}/visite",
                   style: TextStyle(color: kPrimaryColor),
                 ),
               ],
@@ -74,15 +77,17 @@ class _BodyState extends State<Body> {
             thisMonthDayBorderColor: Colors.grey,
             height: 420.0,
             daysHaveCircularBorder: false,
-
-            /// null for not rendering any border, true for circular border, false for rectangular border
+            markedDateCustomTextStyle: TextStyle(
+              fontSize: 18,
+              color: Colors.blue,
+            ),
           ),
           // Expanded(
           //   child: ListView(
           //     children: [
           //       CheckboxListTile(
           //         title: Text("title text"),
-          //         value: checkedValue,
+          //         value: true,
           //         onChanged: (newValue) {},
           //         controlAffinity:
           //             ListTileControlAffinity.leading, //  <-- leading Checkbox

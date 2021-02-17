@@ -21,7 +21,7 @@ class TitleImmo extends StatelessWidget {
                 ),
                 Text(
                   subTitleImmo,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
                 SizedBox(height: 10),
               ],
