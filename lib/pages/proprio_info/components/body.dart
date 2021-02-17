@@ -7,6 +7,8 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
+import '../../../api.dart';
+
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ItemInfo extends StatelessWidget {
   const ItemInfo({
     Key key,
   }) : super(key: key);
-
+   _realEstateVisitApi = new RealEstateVisitApi();
   get checkedValue => true;
 
   @override
@@ -131,16 +133,7 @@ class ItemInfo extends StatelessWidget {
               Button(
                 name: 'Booker la visite',
                 size: size,
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
-                    ),
-                  );
-                },
+                press: _realEstateVisitApi
               )
             ],
           ),
