@@ -3,6 +3,8 @@ import 'package:ynov_immo/pages/home/components/app_bar.dart';
 import 'package:ynov_immo/pages/home/components/body.dart';
 import 'package:ynov_immo/api.dart';
 
+import 'package:ynov_immo/pages/MesBiens/mesBiens-screen.dart';
+
 
 void login () {
   var apiInstance = new AuthApi();
@@ -21,7 +23,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(context),
-      body: Body(),
+      body: MesBiens(),
     );
   }
 }

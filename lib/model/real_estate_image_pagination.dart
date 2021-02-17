@@ -38,7 +38,7 @@ class RealEstateImagePagination {
         json['limit']
     ;
     list =
-      RealEstateImage.listFromJson(json['list'])
+      RealEstateImage.listFromJson(json['data'])
 ;
   }
 
