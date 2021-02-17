@@ -9,40 +9,33 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../../../api.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  const Body({Key key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: ItemInfo(),
-        ),
-      ],
-    );
-  }
+  _BodyState createState() => _BodyState();
 }
 
-class ItemInfo extends StatelessWidget {
-  const ItemInfo({
-    Key key,
-  }) : super(key: key);
-   _realEstateVisitApi = new RealEstateVisitApi();
+class _BodyState extends State<Body> {
+  RealEstateVisitApi _realEstateVisitApi = new RealEstateVisitApi();
+
+  bool isPostFormInvalid = false;
+
   get checkedValue => true;
+
+  callback(String variable, dynamic value) {
+    setState(() {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      padding: EdgeInsets.all(20),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
-      child: Column(
+    RealEstateVisit body = new RealEstateVisit();
+    return ListView(
+
+      children: [
+        Column(
         children: <Widget>[
           // map
           TitleImmo(titleImmo: "titleImmo", subTitleImmo: "subTitleImmo"),
@@ -133,12 +126,14 @@ class ItemInfo extends StatelessWidget {
               Button(
                 name: 'Booker la visite',
                 size: size,
-                press: _realEstateVisitApi
+                press: () { _realEstateVisitApi.realEstateVisitPost(body);}
               )
             ],
           ),
         ],
       ),
+        ]
     );
+
   }
 }
