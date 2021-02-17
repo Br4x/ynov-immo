@@ -15,11 +15,11 @@ class CategoryList extends StatelessWidget {
         children: <Widget>[
           CategoryItem(
             title: "Combo Meal",
+            isActive: true,
             press: () {},
           ),
           CategoryItem(
             title: "Feedback",
-            isActive: true,
             press: () {},
           ),
           CategoryItem(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/constants.dart';
+import 'package:ynov_immo/pages/feedback/feedback-screen.dart';
 import 'package:ynov_immo/pages/home/home-screen.dart';
 
 void main() => runApp(MyApp());
