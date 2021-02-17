@@ -195,6 +195,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_calendar_carousel:
+    dependency: "direct main"
+    description:
+      name: flutter_calendar_carousel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.3"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -211,6 +225,20 @@ packages:
     dependency: transitive
     description:
       name: glob
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
@@ -354,6 +382,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   pool:
     dependency: transitive
     description:
@@ -508,4 +543,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.24.0-6.0.pre"
+  flutter: ">=1.24.0-6.0.pre <2.0.0"

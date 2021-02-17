@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
-import 'package:ynov_immo/pages/proprio_info/proprio_info_screen.dart';
+import 'package:ynov_immo/pages/home/home-screen.dart';
 
-AppBar homeAppBar(BuildContext context) {
+AppBar ProprioInfoAppBar(BuildContext context) {
   return AppBar(
+    elevation: 1,
     centerTitle: true,
     backgroundColor: Colors.white,
-    elevation: 1,
     leading: IconButton(
-      icon: SvgPicture.asset("assets/icons/menu.svg"),
+      icon: Icon(
+        Icons.arrow_back,
+      ),
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) {
-              return ProprioInfoScreen();
+              return HomeScreen();
             },
           ),
         );
@@ -41,7 +43,7 @@ AppBar homeAppBar(BuildContext context) {
     ),
     actions: <Widget>[
       IconButton(
-        icon: SvgPicture.asset("assets/icons/notification.svg"),
+        icon: SvgPicture.asset("assets/icons/person.svg"),
         onPressed: () {},
       ),
     ],
