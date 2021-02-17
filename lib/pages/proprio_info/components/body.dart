@@ -18,28 +18,20 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   RealEstateVisitApi _realEstateVisitApi = new RealEstateVisitApi();
-
+  RealEstateVisit _realEstateVisit = new RealEstateVisit();
+  RealEstate _realEstate = new RealEstate();
+  
   bool isPostFormInvalid = false;
 
   get checkedValue => true;
 
-  callback(String variable, dynamic value) {
-    setState(() {
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    RealEstateVisit body = new RealEstateVisit();
-    return ListView(
-
-      children: [
-        Column(
-        children: <Widget>[
-          // map
+    return Padding(
+      padding: EdgeInsets.all(25),
+      child: ListView(
+        children: [
           TitleImmo(titleImmo: "titleImmo", subTitleImmo: "subTitleImmo"),
-
           RichText(
               text: TextSpan(
                   style: Theme.of(context)
@@ -56,11 +48,6 @@ class _BodyState extends State<Body> {
                   style: TextStyle(color: ksecondaryColor),
                 ),
               ])),
-          IconButton(
-            icon: SvgPicture.asset("assets/icons/person.svg"),
-            onPressed: () {},
-            color: Colors.black,
-          ),
           SmoothStarRating(
             borderColor: kPrimaryColor,
             rating: 4,
@@ -83,7 +70,6 @@ class _BodyState extends State<Body> {
               ],
             ),
           ),
-
           CalendarCarousel(
             thisMonthDayBorderColor: Colors.grey,
             height: 420.0,
@@ -91,27 +77,35 @@ class _BodyState extends State<Body> {
 
             /// null for not rendering any border, true for circular border, false for rectangular border
           ),
-
-          Expanded(
-            child: ListView(
-              children: [
-                CheckboxListTile(
-                  title: Text("title text"),
-                  value: checkedValue,
-                  onChanged: (newValue) {},
-                  controlAffinity:
-                      ListTileControlAffinity.leading, //  <-- leading Checkbox
-                ),
-              ],
-            ),
-          ),
-
+          // Expanded(
+          //   child: ListView(
+          //     children: [
+          //       CheckboxListTile(
+          //         title: Text("title text"),
+          //         value: checkedValue,
+          //         onChanged: (newValue) {},
+          //         controlAffinity:
+          //             ListTileControlAffinity.leading, //  <-- leading Checkbox
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Row(
             children: [
-              Button(
-                name: 'Contacter le proprio',
-                size: size,
-                press: () {
+              TextButton(
+                style: TextButton.styleFrom(
+                    side: BorderSide(color: Colors.black, width: 2),
+                    // primary: Colors.black,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    backgroundColor: Colors.deepOrange,
+                    padding: EdgeInsets.all(8.0),
+                    minimumSize: Size(150, 50)),
+                child: Text(
+                  "Contacter proprio",
+                ),
+                onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -122,18 +116,27 @@ class _BodyState extends State<Body> {
                   );
                 },
               ),
-              SizedBox(width: size.width * 0.05),
-              Button(
-                name: 'Booker la visite',
-                size: size,
-                press: () { _realEstateVisitApi.realEstateVisitPost(body);}
-              )
+              SizedBox(width: 20,),
+              TextButton(
+                  style: TextButton.styleFrom(
+                      side: BorderSide(color: Colors.black, width: 2),
+                      // primary: Colors.black,
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.deepOrange,
+                      padding: EdgeInsets.all(8.0),
+                      minimumSize: Size(150, 50)),
+                  child: Text(
+                    'Booker la visite',
+                  ),
+                  onPressed: () {
+                    _realEstateVisitApi.realEstateVisitPost(_realEstateVisit);
+                  })
             ],
           ),
         ],
       ),
-        ]
     );
-
   }
 }
