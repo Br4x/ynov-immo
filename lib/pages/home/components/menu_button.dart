@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ynov_immo/constants.dart';
 
-class ItemCard extends StatelessWidget {
-  final String title, shopName, svgSrc;
+class MenuButton extends StatelessWidget {
+  final String title, svgSrc;
   final Function press;
-  const ItemCard({
+  const MenuButton({
     Key key,
     this.title,
-    this.shopName,
     this.svgSrc,
     this.press,
   }) : super(key: key);
@@ -35,7 +34,7 @@ class ItemCard extends StatelessWidget {
         child: InkWell(
           onTap: press,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 Container(
@@ -43,7 +42,8 @@ class ItemCard extends StatelessWidget {
                   padding: EdgeInsets.all(25),
                   decoration: BoxDecoration(
                     color: kPrimaryColor.withOpacity(0.13),
-                    shape: BoxShape.circle,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: SvgPicture.asset(
                     svgSrc,
@@ -51,12 +51,11 @@ class ItemCard extends StatelessWidget {
                     // size.width * 0.18 means it use 18% of total width
                   ),
                 ),
-                Text(title),
-                SizedBox(height: 10),
                 Text(
-                  shopName,
-                  style: TextStyle(fontSize: 12),
+                  title,
+                  style: TextStyle(color: Colors.black.withOpacity(0.4)),
                 ),
+                SizedBox(height: 0.5),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/details/details-screen.dart';
-import 'package:ynov_immo/pages/home/components/item_card.dart';
+import 'package:ynov_immo/pages/feedback-pro/feedback-pro.dart';
+import 'package:ynov_immo/pages/home/components/menu_button.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({
@@ -9,35 +10,31 @@ class ItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
+    return Center(
+      child: Column(
         children: <Widget>[
-          ItemCard(
-            svgSrc: "assets/icons/burger_beer.svg",
-            title: "Burger & Beer",
-            shopName: "MacDonald's",
+          MenuButton(
+            svgSrc: "assets/icons/map.svg",
+            title: "Trouver un bien",
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return DetailsScreen();
+                    return FeedbackScreen();
                   },
                 ),
               );
             },
           ),
-          ItemCard(
-            svgSrc: "assets/icons/chinese_noodles.svg",
-            title: "Chinese & Noodles",
-            shopName: "Wendys",
+          MenuButton(
+            svgSrc: "assets/icons/sell_house.svg",
+            title: "Vendre un bien",
             press: () {},
           ),
-          ItemCard(
-            svgSrc: "assets/icons/burger_beer.svg",
-            title: "Burger & Beer",
-            shopName: "MacDonald's",
+          MenuButton(
+            svgSrc: "assets/icons/visitor.svg",
+            title: "Faire visiter un bien",
             press: () {},
           )
         ],
