@@ -27,6 +27,7 @@ class ApiClient {
   }
 
   dynamic _deserialize(dynamic value, String targetType) {
+    print(targetType);
     try {
       switch (targetType) {
         case 'String':

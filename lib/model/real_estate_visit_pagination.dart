@@ -14,13 +14,25 @@ class RealEstateVisitPagination {
   int limit = null;
   
 
-  List<RealEstateVisit> list = [];
+  List<RealEstateVisit> data = [];
   
-  RealEstateVisitPagination();
+  RealEstateVisitPagination(
+      int code,
+      int total,
+      int offset,
+      int limit,
+      List<RealEstateVisit> data,
+      ){
+    this.code = code;
+    this.total = total;
+    this.offset = offset;
+    this.limit = limit;
+    this.data = data;
+  }
 
   @override
   String toString() {
-    return 'RealEstateVisitPagination[code=$code, total=$total, offset=$offset, limit=$limit, list=$list, ]';
+    return 'RealEstateVisitPagination[code=$code, total=$total, offset=$offset, limit=$limit, list=$data, ]';
   }
 
   RealEstateVisitPagination.fromJson(Map<String, dynamic> json) {
@@ -37,8 +49,8 @@ class RealEstateVisitPagination {
     limit =
         json['limit']
     ;
-    list =
-      RealEstateVisit.listFromJson(json['list'])
+    data =
+      RealEstateVisit.listFromJson(json['data'])
 ;
   }
 
@@ -48,7 +60,7 @@ class RealEstateVisitPagination {
       'total': total,
       'offset': offset,
       'limit': limit,
-      'list': list
+      'data': data
      };
   }
 

@@ -5,6 +5,8 @@ import 'package:flutter_map/flutter_map.dart';
 import "package:latlong/latlong.dart";
 import 'package:ynov_immo/constants.dart';
 
+import '../../../api.dart';
+
 class RealEstateData {
     final int id;
     final int idUser;
@@ -34,9 +36,14 @@ class RealEstateData {
 }
 
 class Body extends StatelessWidget {
+
+
+
+
   final RealEstateData realEstateData;
 
   Body({Key key, @required this.realEstateData}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +62,18 @@ class ItemInfo extends StatelessWidget {
 
   ItemInfo({Key key, @required this.realEstateData}) : super(key: key);
 
+  getRealEstateVisitesCount (idRealEstate) async {
+    var apiInstance = new RealEstateVisitApi();
+    try {
+      // todo chercher par date >= ajd var result = await apiInstance.realEstateVisitGet(where: ["id_real_estate:%" + idRealEstate.toString() + "%"], limit: 1, fields: "", order: "", offset:0);
+      var result = await apiInstance.realEstateVisitGet(where: [], limit: 1, fields: "", order: "", offset:0);
+
+      return result;
+    } catch (e) {
+      print(e);
+      return Future.error(e.toString());/* "Exception when calling RealEstateImageApi->realEstateImageGet: $e\n";*/
+    }
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -70,7 +89,16 @@ class ItemInfo extends StatelessWidget {
                   shape: BadgeShape.square,
                   badgeColor: Colors.redAccent,
                   borderRadius: BorderRadius.circular(8),
-                  badgeContent: Text('5 visites prévues', style: TextStyle(color: Colors.white),),
+                  badgeContent: FutureBuilder(
+                    future: getRealEstateVisitesCount(1),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        return Text('5 visites prévues', style: TextStyle(color: Colors.white),);
+                      }else{
+                        return Text('Chargment des visites en cours...', style: TextStyle(color: Colors.white),);
+                      }
+                    },),
+
                   child: CarouselSlider(
                     options: CarouselOptions(
                       height: 250.0,
@@ -259,6 +287,7 @@ class ItemInfo extends StatelessWidget {
                     options: MapOptions(
                       center: LatLng(double.parse(realEstateData.latitude.replaceAll(",", ".")),  double.parse(realEstateData.longitude.replaceAll(",", "."))),
                       zoom: 13.0,
+                      maxZoom: 18.0,
                     ),
                     layers: [
                       TileLayerOptions(

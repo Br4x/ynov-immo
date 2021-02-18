@@ -2,36 +2,61 @@ part of swagger.api;
 
 class RealEstateVisit {
   /* Id de la visite */
-  int id = null;
+  int id;
   
 /* Id du bien */
-  int idRealEstate = null;
+  int idRealEstate;
   
 /* Id du booker */
-  int idBooker = null;
+  int idBooker;
   
 /* Id du visiteur */
-  int idVisitor = null;
+  int idVisitor;
   
 /* Date de début (YYYY-mm-dd) */
-  DateTime startDate = null;
+  DateTime startDate;
   
 /* Date de fin (YYYY-mm-dd) */
-  DateTime endDate = null;
+  DateTime endDate;
   
 /* Heure de début (hh:mm) */
-  DateTime startTime = null;
+  DateTime startTime;
   
 /* Heure de fin (hh:mm) */
-  DateTime endTime = null;
+  DateTime endTime;
   
 /* Le booker est prêt ? */
-  int bookerIsReady = null;
+  int bookerIsReady;
   
 /* Les visiteurs sont prêts ? */
-  int visitorIsReady = null;
-  
-  RealEstateVisit();
+  int visitorIsReady;
+
+  RealEstateVisit(
+      {
+        int id,
+        int idRealEstate,
+        int idBooker,
+        int idVisitor,
+        DateTime startDate,
+        DateTime endDate,
+        DateTime startTime,
+        DateTime endTime,
+        int bookerIsReady,
+        int visitorIsReady,
+      }
+      ) {
+    this.id = id;
+    this.idRealEstate = idRealEstate;
+    this.idBooker = idBooker;
+    this.idVisitor = idVisitor;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.bookerIsReady = bookerIsReady;
+    this.visitorIsReady = visitorIsReady;
+
+  }
 
   @override
   String toString() {
@@ -39,6 +64,7 @@ class RealEstateVisit {
   }
 
   RealEstateVisit.fromJson(Map<String, dynamic> json) {
+    json = json["data"];
     if (json == null) return;
     id =
         json['id']

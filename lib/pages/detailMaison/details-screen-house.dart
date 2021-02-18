@@ -5,10 +5,10 @@ import 'package:ynov_immo/pages/detailMaison/components/body.dart';
 import 'package:ynov_immo/api.dart';
 
 class DetailsScreenHouse extends StatelessWidget {
-  getRealEstateData () async {
+  getRealEstateData (idRealEstate) async {
     var apiInstance = new RealEstateApi();
     try {
-      var result = await apiInstance.realEstateIdGet(1);
+      var result = await apiInstance.realEstateIdGet(idRealEstate);
       return result;
     } catch (e) {
       return "Exception when calling RealEstateApi->realEstateIdGet: $e\n";
@@ -21,7 +21,7 @@ class DetailsScreenHouse extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       appBar: detailsAppBar(context),
       body: FutureBuilder(
-        future: getRealEstateData(),
+        future: getRealEstateData(1),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             // while data is loading:
