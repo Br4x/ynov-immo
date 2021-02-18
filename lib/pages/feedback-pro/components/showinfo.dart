@@ -8,6 +8,7 @@ class Showinfo extends StatelessWidget {
         message: "Pourquoi la visite n'a pas marché, etc...",
         child: FlatButton(
           minWidth: 100,
+          onPressed: () {},
           child: Icon(
             Icons.info_outline,
             size: 40,
