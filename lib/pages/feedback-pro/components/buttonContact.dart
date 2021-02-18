@@ -15,7 +15,11 @@ class ButtonContact extends StatelessWidget {
             height: 60.0,
             child: ElevatedButton(
               onPressed: () {
-                // Respond to button press
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content:
+                      Text('Votre message a bien été envoyé au propriétaire.'),
+                  duration: Duration(seconds: 4),
+                ));
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.red[400], // background

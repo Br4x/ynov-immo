@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class Showinfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: EdgeInsets.only(top: 10.0),
       child: Tooltip(
         message: "Pourquoi la visite n'a pas marché, etc...",
         child: FlatButton(
