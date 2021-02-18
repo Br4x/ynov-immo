@@ -73,14 +73,20 @@ class FilterScreenState extends State<FilterScreen> {
     );
   }
   Widget _buildCity(data) {
-
-    // return CustomSearchCity();
-    List<String> cityNames = ['Paris','Bordeaux','Lyon','Toulouse','Marseille','Rennes','Strasbourg'];
+    List<String> cityNames = [];
+    data.forEach((key, values) {
+      if(key == 'data') {
+        values.forEach((value) {
+          cityNames.add(value['name']);
+        });
+      }
+    });
+    print(cityNames);
+    // List<String> cityNames = ['Paris','Bordeaux','Lyon','Toulouse','Marseille','Rennes','Strasbourg'];
     return DropDownField(
       hintText: "Tapez le nom de la ville",
       enabled: true,
       items: cityNames,
-      // items: cityNames,
       itemsVisibleInDropdown: 3,
       onValueChanged: (value) {
         setState(() {
@@ -130,7 +136,7 @@ class FilterScreenState extends State<FilterScreen> {
       child: FutureBuilder<dynamic>(
         future: _cities,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            child: Column(
+          // List<Widget> children;
           print(snapshot);
           return Form(
               key: _formKey,
@@ -157,9 +163,14 @@ class FilterScreenState extends State<FilterScreen> {
                       ),
                       color: Colors.red,
                       onPressed: () async => {
-                        // print(_formKey.currentState.validate())
                         print('type: $_type ,city: $_city, price: $_price, surface: $_surface')
-                        // new Dio().post('',)
+                        // await dio.post("/", data: {
+                        //   "type": _type,
+                        //   "city": _city,
+                        //   "districts": _districts,
+                        //   "price": _price,
+                        //   "surface": _surface}
+                        // )
                         // if (!_formKey.currentState.validate()) {
                         //   // return null;
                         // }
