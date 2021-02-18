@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/details/details-screen.dart';
+import 'package:ynov_immo/pages/home/components/item_card.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({

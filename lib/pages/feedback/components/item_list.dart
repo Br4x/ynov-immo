@@ -45,7 +45,7 @@ class ItemList extends StatelessWidget {
                           if (snapshot.hasData) {
                             if (snapshot.data != null) {
                               return PageView.builder(
-                                scrollDirection: Axis.horizontal,
+                                scrollDirection: Axis.vertical,
                                 itemCount: 5,
                                 itemBuilder: (BuildContext context, index) {
                                   return Card(
@@ -66,13 +66,13 @@ class ItemList extends StatelessWidget {
                 )
             ),
             Container(
-              margin: EdgeInsets.only(right: 10.0),
+              // margin: EdgeInsets.only(right: 10.0),
               child: new RaisedButton.icon(
                 onPressed: () {},
-                label: Text('Suivant'),
+                label: Text('Voir plus'),
                 icon: Icon(Icons.navigate_next),
               ),
-              alignment: Alignment.bottomRight,
+              alignment: Alignment.bottomCenter,
             )
           ],
         ),
