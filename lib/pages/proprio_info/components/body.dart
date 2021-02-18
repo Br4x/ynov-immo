@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ynov_immo/api.dart';
 import 'package:ynov_immo/constants.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:ynov_immo/pages/proprio_info/components/title_immo.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../api.dart';
 
@@ -22,19 +25,21 @@ class _BodyState extends State<Body> {
   RealEstateVisit _realEstateVisit = new RealEstateVisit();
   RealEstateApi _realEstateApi = new RealEstateApi();
   UserApi _userApi = new UserApi();
-
+  Completer<GoogleMapController> _controller = Completer();
   bool isPostFormInvalid = false;
-
 
   @override
   Widget build(BuildContext context) {
     var _realEstateTest;
-    _realEstateApi.realEstateIdGet(0).then((value) => {_realEstateTest = value});
+    // ignore: unnecessary_statements
+    () async => _realEstateTest = await _realEstateApi.realEstateIdGet(0);
     return Padding(
       padding: EdgeInsets.all(25),
       child: ListView(
         children: [
-          TitleImmo(titleImmo: "{_userApi.userIdGet(_realEstateTest.accroche)}", subTitleImmo: "X km de chez vous"),
+          TitleImmo(
+              titleImmo: "{_userApi.userIdGet(_realEstateTest.accroche)}",
+              subTitleImmo: "X km de chez vous"),
           RichText(
               text: TextSpan(
                   style: Theme.of(context)
@@ -82,19 +87,14 @@ class _BodyState extends State<Body> {
               color: Colors.blue,
             ),
           ),
-          // Expanded(
-          //   child: ListView(
-          //     children: [
-          //       CheckboxListTile(
-          //         title: Text("title text"),
-          //         value: true,
-          //         onChanged: (newValue) {},
-          //         controlAffinity:
-          //             ListTileControlAffinity.leading, //  <-- leading Checkbox
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          CheckboxListTile(
+            title: Text("title text"),
+            value: true,
+            onChanged: (newValue) {},
+            controlAffinity:
+                ListTileControlAffinity.leading, //  <-- leading Checkbox
+          ),
+          SizedBox(width: 20),
           Row(
             children: [
               TextButton(
@@ -121,7 +121,7 @@ class _BodyState extends State<Body> {
                   );
                 },
               ),
-              SizedBox(width: 20,),
+              SizedBox(width: 20),
               TextButton(
                   style: TextButton.styleFrom(
                       side: BorderSide(color: Colors.black, width: 2),
