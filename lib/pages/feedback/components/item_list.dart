@@ -46,10 +46,10 @@ class ItemList extends StatelessWidget {
                             if (snapshot.data != null) {
                               return PageView.builder(
                                 scrollDirection: Axis.vertical,
-                                itemCount: 5,
+                                itemCount: 3,
                                 itemBuilder: (BuildContext context, index) {
                                   return Card(
-                                    child: Text(snapshot.data.toString()),
+                                    child: Text(snapshot.data[index].list.last.feedback),
                                   );
                                 },
                               );
