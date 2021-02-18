@@ -1,47 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:ynov_immo/pages/details/details-screen.dart';
-import 'package:ynov_immo/pages/home/components/item_card.dart';
+import '../../../api.dart';
 
 class ItemList extends StatelessWidget {
+
   const ItemList({
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    Future<List<RealEstateFeedbackPagination>> getFeedbacks() async {
+
+      try {
+        RealEstateFeedbackApi apiInstance = new RealEstateFeedbackApi();
+        Future<List<RealEstateFeedbackPagination>> feedbacks = apiInstance.realEstateFeedbackGet();
+        print(feedbacks);
+        return feedbacks;
+
+      } on Exception {
+          throw Exception('No Internet connection');
+      }
+
+    }
+
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: <Widget>[
-          ItemCard(
-            svgSrc: "assets/icons/burger_beer.svg",
-            title: "Burger & Beer",
-            shopName: "MacDonald's",
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return DetailsScreen();
-                  },
-                ),
-              );
-            },
-          ),
-          ItemCard(
-            svgSrc: "assets/icons/chinese_noodles.svg",
-            title: "Chinese & Noodles",
-            shopName: "Wendys",
-            press: () {},
-          ),
-          ItemCard(
-            svgSrc: "assets/icons/burger_beer.svg",
-            title: "Burger & Beer",
-            shopName: "MacDonald's",
-            press: () {},
-          )
-        ],
-      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Flexible(
+                child: Container(
+                  height: 200,
+                  child: FutureBuilder<List<RealEstateFeedbackPagination>>(
+                    future: getFeedbacks(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                          return Text('Failed connection API');
+                        case ConnectionState.waiting:
+                          return new Text('Wait...');
+                        case ConnectionState.done:
+                          if (snapshot.hasData) {
+                            if (snapshot.data != null) {
+                              return PageView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 5,
+                                itemBuilder: (BuildContext context, index) {
+                                  return Card(
+                                    child: Text(snapshot.data.toString()),
+                                  );
+                                },
+                              );
+                            }
+                          }
+                          break;
+                        case ConnectionState.active:
+                      }
+
+                      // By default, show a loading spinner.
+                      return CircularProgressIndicator();
+                    },
+                  ),
+                )
+            ),
+            Container(
+              margin: EdgeInsets.only(right: 10.0),
+              child: new RaisedButton.icon(
+                onPressed: () {},
+                label: Text('Suivant'),
+                icon: Icon(Icons.navigate_next),
+              ),
+              alignment: Alignment.bottomRight,
+            )
+          ],
+        ),
+      )
     );
   }
 }

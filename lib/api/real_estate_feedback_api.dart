@@ -65,8 +65,13 @@ class RealEstateFeedbackApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return 
-        (apiClient.deserialize(response.body, 'List<RealEstateFeedbackPagination>') as List).map((item) => item as RealEstateFeedbackPagination).toList();
+
+      List<RealEstateFeedbackPagination> test = [];
+      test.add(apiClient.deserialize(response.body, 'List<RealEstateFeedbackPagination>'));
+
+      return
+
+        test.map((item) => item as RealEstateFeedbackPagination).toList();
     } else {
       return null;
     }

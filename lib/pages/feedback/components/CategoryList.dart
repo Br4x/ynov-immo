@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/home/components/category_item.dart';
+import 'package:ynov_immo/pages/home/home-screen.dart';
+
+import '../feedback-screen.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
@@ -13,26 +16,33 @@ class CategoryList extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+
           CategoryItem(
-            title: "Combo Meal",
-            isActive: true,
-            press: () {},
+            title: "Accueil",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return HomeScreen();
+                  },
+                ),
+              );
+            },
           ),
           CategoryItem(
             title: "Feedback",
-            press: () {},
-          ),
-          CategoryItem(
-            title: "Chicken",
-            press: () {},
-          ),
-          CategoryItem(
-            title: "Beverages",
-            press: () {},
-          ),
-          CategoryItem(
-            title: "Snacks & Sides",
-            press: () {},
+            isActive: true,
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return FeedbackScreen();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

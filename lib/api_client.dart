@@ -113,6 +113,8 @@ class ApiClient {
   dynamic deserialize(String jsonVal, String targetType) {
     // Remove all spaces.  Necessary for reg expressions as well.
     targetType = targetType.replaceAll(' ', '');
+    targetType = targetType.replaceAll('List<', '');
+    targetType = targetType.replaceAll('>', '');
 
     if (targetType == 'String') return jsonVal;
 
