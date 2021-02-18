@@ -11,7 +11,7 @@ class RealEstateMarker extends Marker {
     anchorPos: AnchorPos.align(AnchorAlign.top),
     height: 80.0,
     width: 80.0,
-    point: LatLng(double.parse(realEstate.latitude), double.parse(realEstate.longitude)),
+    point: LatLng(double.tryParse(realEstate.latitude) ?? 0.0, double.tryParse(realEstate.longitude) ?? 0.0) ,
     builder: (BuildContext ctx) => Container(
       child: FlutterLogo(),
     ),

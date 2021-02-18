@@ -17,10 +17,10 @@ class RealEstatePopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(realEstate.accroche),
-            Text(realEstate.address),
-            Text(realEstate.size.toString()),
-            Text(realEstate.price.toString())
+            Text("Description: " + realEstate.accroche),
+            Text("Adresse: " + realEstate.address),
+            Text("Taille: " + realEstate.size.toString()),
+            Text("Prix: " + realEstate.price.toString())
           ],
         ),
       ),
