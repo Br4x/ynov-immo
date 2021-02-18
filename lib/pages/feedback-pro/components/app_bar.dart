@@ -5,10 +5,11 @@ import 'package:ynov_immo/constants.dart';
 AppBar feedbackBar(BuildContext context) {
   return AppBar(
     centerTitle: true,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.red[400],
     elevation: 1,
     leading: IconButton(
       icon: SvgPicture.asset("assets/icons/menu.svg"),
+      color: Colors.white,
       onPressed: () {},
     ),
     title: RichText(
@@ -19,12 +20,12 @@ AppBar feedbackBar(BuildContext context) {
             .copyWith(fontWeight: FontWeight.bold),
         children: [
           TextSpan(
-            text: "Ynov",
-            style: TextStyle(color: ksecondaryColor),
+            text: "Ynov ",
+            style: TextStyle(color: Colors.white),
           ),
           TextSpan(
             text: "Immo",
-            style: TextStyle(color: kPrimaryColor),
+            style: TextStyle(color: Colors.white),
           ),
         ],
       ),

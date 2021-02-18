@@ -14,7 +14,7 @@ class ItemList extends StatelessWidget {
       child: Column(
         children: <Widget>[
           MenuButton(
-            svgSrc: "assets/icons/map.svg",
+            svgSrc: "assets/icons/visitor.svg",
             title: "Laisser un feedback au propriétaire",
             press: () {
               Navigator.push(
@@ -27,16 +27,6 @@ class ItemList extends StatelessWidget {
               );
             },
           ),
-          MenuButton(
-            svgSrc: "assets/icons/sell_house.svg",
-            title: "Vendre un bien",
-            press: () {},
-          ),
-          MenuButton(
-            svgSrc: "assets/icons/visitor.svg",
-            title: "Faire visiter un bien",
-            press: () {},
-          )
         ],
       ),
     );
