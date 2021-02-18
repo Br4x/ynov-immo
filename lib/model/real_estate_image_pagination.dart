@@ -16,7 +16,20 @@ class RealEstateImagePagination {
 
   List<RealEstateImage> list = [];
   
-  RealEstateImagePagination();
+  RealEstateImagePagination(
+      {
+        int code,
+        int total,
+        int offset,
+        int limit,
+      }
+      )
+  {
+    this.code = code;
+    this.total = total;
+    this.offset = offset;
+    this.limit = limit;
+  }
 
   @override
   String toString() {
@@ -38,8 +51,7 @@ class RealEstateImagePagination {
         json['limit']
     ;
     list =
-      RealEstateImage.listFromJson(json['list'])
-;
+      RealEstateImage.listFromJson(json['list']);
   }
 
   Map<String, dynamic> toJson() {
