@@ -28,8 +28,6 @@ class _ChatListState extends State<ChatList> {
             var commentBuild =
                 element.comment + " - " + element.date.toIso8601String();
 
-            print(element);
-
             var textStyle =
                 TextStyle(color: Color.fromRGBO(118, 120, 121, 1.0));
             var mainAxisAlignment = MainAxisAlignment.start;
@@ -39,7 +37,10 @@ class _ChatListState extends State<ChatList> {
               mainAxisAlignment = MainAxisAlignment.end;
             }
 
-            var text = Text(commentBuild, style: textStyle);
+            var text = Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(commentBuild, style: textStyle),
+            );
 
             setState(() {
               chats.add(
