@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/feedback/components/CategoryList.dart';
-import 'package:ynov_immo/pages/feedback/components/item_list.dart';
-
+import 'item_list.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -11,7 +10,7 @@ class Body extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CategoryList(),
-          ItemList(),
+          ItemList()
         ],
       ),
     );

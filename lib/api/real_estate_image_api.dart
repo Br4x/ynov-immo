@@ -65,8 +65,12 @@ class RealEstateImageApi {
     if(response.statusCode >= 400) {
       throw new ApiException(response.statusCode, response.body);
     } else if(response.body != null) {
-      return 
-        (apiClient.deserialize(response.body, 'List<RealEstateImagePagination>') as List).map((item) => item as RealEstateImagePagination).toList();
+      List<RealEstateImagePagination> test = [];
+      test.add(apiClient.deserialize(response.body, 'List<RealEstateImagePagination>'));
+
+      return
+        test.map((item) => item as RealEstateImagePagination).toList();
+
     } else {
       return null;
     }
