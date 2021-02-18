@@ -1,5 +1,7 @@
 import 'dart:math';
-import 'package:ynov_immo/pages/home/components/custom_search_city.dart';
+// import 'package:ynov_immo/pages/home/components/custom_search_city.dart';
+import 'package:dio/dio.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -17,6 +19,23 @@ class FilterScreenState extends State<FilterScreen> {
   var _city;
   var _price;
   var _surface;
+  Future<dynamic> _cities;
+  var _districts;
+  var districts;
+  final dio = new Dio(); // for http requests
+
+  Future<dynamic> _getCities () async {
+    var response = await dio.get('https://ynov-api.ew.r.appspot.com/api/v1/city');
+    return response.data;
+  }
+
+  @override
+  void initState() {
+    _cities = _getCities();
+    _price = [50000, 200000];
+    _surface = [30, 100];
+    super.initState();
+  }
 
   // price
   RangeValues values = RangeValues(50000, 200000);
@@ -29,19 +48,6 @@ class FilterScreenState extends State<FilterScreen> {
 
   Widget _buildType() {
     return Column(
-      // children: _group
-      //     .map((t) => RadioListTile(
-      //   title: Text("${t.text}"),
-      //   groupValue: _currVal,
-      //   value: t.index,
-      //   onChanged: (val) {
-      //     setState(() {
-      //       _currVal = val.index;
-      //       _currText = t.text;
-      //     });
-      //   },
-      // ))
-      //     .toList(),
       children: <Widget>[
         RadioListTile<PropertyType>(
           title: const Text('Maison'),
@@ -66,21 +72,23 @@ class FilterScreenState extends State<FilterScreen> {
       ],
     );
   }
-  Widget _buildCity() {
+  Widget _buildCity(data) {
+
     // return CustomSearchCity();
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Ville'),
-      validator: (String value){
-        if(value.isEmpty) {
-          return 'Rentrez le nom de la ville';
-        } else {
-          return value;
-        }
-      },
-      onSaved: (String value){
-        _city = value;
+    List<String> cityNames = ['Paris','Bordeaux','Lyon','Toulouse','Marseille','Rennes','Strasbourg'];
+    return DropDownField(
+      hintText: "Tapez le nom de la ville",
+      enabled: true,
+      items: cityNames,
+      // items: cityNames,
+      itemsVisibleInDropdown: 3,
+      onValueChanged: (value) {
+        setState(() {
+          _city = value;
+        });
       },
     );
+
   }
   Widget _buildPrice() {
     return RangeSlider(
@@ -119,38 +127,49 @@ class FilterScreenState extends State<FilterScreen> {
       // alignment: Alignment.topRight,
       // margin: EdgeInsets.all(24),
       padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-      child: Builder(
-        builder: (context) => Form(
-            key: _formKey,
+      child: FutureBuilder<dynamic>(
+        future: _cities,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text('Type de biens'),
-                  _buildType(),
-                  _buildCity(),
-                  Text('Prix'),
-                  _buildPrice(),
-                  Text('Surface'),
-                  _buildSurface(),
-                  SizedBox(height: 100,),
-                  RaisedButton(
-                    child: Text(
-                      'Valider',
-                      style: TextStyle(color: Colors.white, fontSize: 16,),
-                    ),
-                    color: Colors.red,
-                    onPressed: () => {
-                      print(_formKey.currentState.validate())
-                      // if (!_formKey.currentState.validate()) {
-                      //   // return null;
-                      // }
-                    },
-                  )
-                ]
-            )
-        ),
-      )
+          print(snapshot);
+          return Form(
+              key: _formKey,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text('Type de biens'),
+                    _buildType(),
+                    SizedBox(height: 10,),
+                    Text('Ville'),
+                    SizedBox(height: 10,),
+                    _buildCity(snapshot.data),
+                    SizedBox(height: 20,),
+                    Text('Prix'),
+                    _buildPrice(),
+                    Text('Surface'),
+                    _buildSurface(),
+                    SizedBox(height: 100,),
+                    RaisedButton(
+                      child: Text(
+                        'Valider',
+                        style: TextStyle(color: Colors.white, fontSize: 16,),
+                      ),
+                      color: Colors.red,
+                      onPressed: () async => {
+                        // print(_formKey.currentState.validate())
+                        print('type: $_type ,city: $_city, price: $_price, surface: $_surface')
+                        // new Dio().post('',)
+                        // if (!_formKey.currentState.validate()) {
+                        //   // return null;
+                        // }
+                      },
+                    )
+                  ]
+              )
+          );
+
+        })
     );
   }
 }
