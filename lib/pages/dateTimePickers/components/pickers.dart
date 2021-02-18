@@ -16,54 +16,32 @@ GlobalKey myFormKey = new GlobalKey();
 class _PickersState extends State<Pickers> {
   //Variable for date
   DateTimeRange myDateRange;
-  var startDate = DateTime.now();
-  var endDate = DateTime.parse("2021-03-20 00:00:00Z");
-  var price = 15;
+  var now = DateTime.now();
+  var startDate = DateTime.now(); //API
+  var price = 15; //API
 
   //Variable for time
-  TimeRangeResult _timeRange;
+  TimeRangeResult timeRange;
+  static const double leftPadding = 15;
   final _defaultTimeRange = TimeRangeResult(
     TimeOfDay(hour: 8, minute: 00),
     TimeOfDay(hour: 9, minute: 00),
-  );
-  static const double leftPadding = 15;
+  ); //API
 
   //variable for numberpicker
-  int _currentIntValue = 10;
-  int _currentHorizontalIntValue = 10;
-  int _currentInfIntValue = 10;
-  int _currentInfIntValueDecorated = 10;
-  double _currentDoubleValue = 3.0;
   NumberPicker integerNumberPicker;
-  NumberPicker horizontalNumberPicker;
-  NumberPicker integerInfiniteNumberPicker;
-  NumberPicker integerInfiniteDecoratedNumberPicker;
-  NumberPicker decimalNumberPicker;
-
-  Decoration _decoration = new BoxDecoration(
-    border: new Border(
-      top: new BorderSide(
-        style: BorderStyle.solid,
-        color: Colors.black26,
-      ),
-      bottom: new BorderSide(
-        style: BorderStyle.solid,
-        color: Colors.black26,
-      ),
-    ),
-  );
 
   @override
   void initState() {
     super.initState();
-    _timeRange = _defaultTimeRange;
+    timeRange = _defaultTimeRange;
   }
 
-  void _submitForm() {
+  void _snakeBar() {
     if (price == null) {
       price = 0;
     }
-    if (_timeRange.end != null) {
+    if (timeRange.end != null) {
       final FormState form = myFormKey.currentState;
       form.save();
       final snackBar = SnackBar(
@@ -71,7 +49,7 @@ class _PickersState extends State<Pickers> {
         action: SnackBarAction(
           label: 'Ok',
           onPressed: () {
-            // Some code to undo the change.
+            //API POST
           },
         ),
       );
@@ -79,6 +57,7 @@ class _PickersState extends State<Pickers> {
     }
   }
 
+  // Number Int Dialog
   Future _showIntDialog() async {
     await showDialog<int>(
       context: context,
@@ -113,10 +92,12 @@ class _PickersState extends State<Pickers> {
                   hintText: 'Veuillez sélectionner une date de début et de fin',
                   border: OutlineInputBorder(),
                 ),
-                initialValue: DateTimeRange(start: startDate, end: endDate),
+                initialValue: DateTimeRange(
+                    start: startDate,
+                    end: DateTime(now.year, now.month, now.day + 1)),
                 validator: (value) {
                   if (value.start.isBefore(DateTime.now())) {
-                    return 'veuillez entrer une date valide';
+                    return 'Veuillez entrer une date valide';
                   }
                   return null;
                 },
@@ -157,13 +138,13 @@ class _PickersState extends State<Pickers> {
               activeBackgroundColor: kTextColor,
               firstTime: TimeOfDay(hour: 8, minute: 00),
               lastTime: TimeOfDay(hour: 20, minute: 00),
-              initialRange: _timeRange,
+              initialRange: timeRange,
               timeStep: 10,
               timeBlock: 60,
-              onRangeCompleted: (range) => setState(() => _timeRange = range),
+              onRangeCompleted: (range) => setState(() => timeRange = range),
             ),
             const SizedBox(height: 20),
-            if (myDateRange != null && _timeRange != null) ...[
+            if (myDateRange != null && timeRange != null) ...[
               Container(
                   alignment: Alignment.center,
                   child: RichText(
@@ -260,7 +241,7 @@ class _PickersState extends State<Pickers> {
                           style: TextStyle(color: ksecondaryColor),
                         ),
                         TextSpan(
-                          text: "${_timeRange.start.format(context)}",
+                          text: "${timeRange.start.format(context)}",
                           style: TextStyle(color: kPrimaryColor),
                         ),
                       ],
@@ -278,7 +259,7 @@ class _PickersState extends State<Pickers> {
                           style: TextStyle(color: ksecondaryColor),
                         ),
                         TextSpan(
-                          text: "${_timeRange.end.format(context)}",
+                          text: "${timeRange.end.format(context)}",
                           style: TextStyle(color: kPrimaryColor),
                         ),
                       ],
@@ -322,11 +303,11 @@ class _PickersState extends State<Pickers> {
               const SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () {
-                  if (_timeRange.end != null) {
-                    _submitForm();
+                  if (timeRange.end != null) {
+                    _snakeBar();
                   }
-                  if (_timeRange.end == null) {
-                    _submitForm();
+                  if (timeRange.end == null) {
+                    _snakeBar();
                   }
                   // Find the Scaffold in the widget tree and use
                   // it to show a SnackBar.
@@ -349,7 +330,7 @@ class _PickersState extends State<Pickers> {
                 ),
               ),
             ],
-            if (myDateRange == null || _timeRange == null) ...[
+            if (myDateRange == null || timeRange == null) ...[
               const SizedBox(height: 30),
               Center(
                   child: RichText(
