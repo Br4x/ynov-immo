@@ -7,7 +7,7 @@ class FeedbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: Color(0xffffffff),
       appBar: feedbackBar(context),
       body: Body(),
     );

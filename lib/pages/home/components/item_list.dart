@@ -15,7 +15,7 @@ class ItemList extends StatelessWidget {
         children: <Widget>[
           MenuButton(
             svgSrc: "assets/icons/map.svg",
-            title: "Trouver un bien",
+            title: "Laisser un feedback au propriétaire",
             press: () {
               Navigator.push(
                 context,
