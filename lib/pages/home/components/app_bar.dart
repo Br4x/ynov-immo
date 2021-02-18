@@ -5,7 +5,7 @@ import 'package:ynov_immo/constants.dart';
 AppBar homeAppBar(BuildContext context) {
   return AppBar(
     centerTitle: true,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.redAccent,
     elevation: 1,
     leading: IconButton(
       icon: SvgPicture.asset("assets/icons/menu.svg"),
@@ -31,7 +31,7 @@ AppBar homeAppBar(BuildContext context) {
     ),
     actions: <Widget>[
       IconButton(
-        icon: SvgPicture.asset("assets/icons/notification.svg"),
+        icon: SvgPicture.asset("assets/icons/person.svg"),
         onPressed: () {},
       ),
     ],

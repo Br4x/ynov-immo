@@ -30,9 +30,9 @@ class _BodyWidgetState extends State<Body> {
     setState(() {
       _realEstateVisit = realEstateVisitMock;
     });
-    date  = DateFormat('d MMM, yyyy').format(_realEstateVisit.startDate);
-    begin  = DateFormat('h:mm a').format(_realEstateVisit.startTime);
-    end  = DateFormat('h:mm a').format(_realEstateVisit.endTime);
+    date  = DateFormat.yMd().format(_realEstateVisit.startDate);
+    begin  = DateFormat.Hm().format(_realEstateVisit.startTime);
+    end  = DateFormat.Hm().format(_realEstateVisit.endTime);
     super.initState();
   }
 
@@ -59,17 +59,17 @@ class _BodyWidgetState extends State<Body> {
                 color: Colors.black.withOpacity(0.6)),
           ),
           Text(
-            "Prochaines étapes :",
+            "Prochaines étapes :                                                                        ",
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black.withOpacity(1.0)),
           ),
           Text(
-                " \n\n     -  Attendre que le propriétaire du bien valide votre visite."
-                "\n\n  -  Faire signer la visite aux visiteurs pour valider que vous y etiez et les visiteurs aussi."
-                "\n\n  -  Faire la visite."
-                "\n\n  -  Optionnel : Envoyer un feedback au propiétaire",
+                "\n\n\t\t\t-  Attendre que le propriétaire du bien valide votre visite."
+                "\n\n\t\t\t-  Faire signer la visite aux visiteurs pour valider que vous y etiez et les visiteurs aussi."
+                "\n\n\t\t\t-  Faire la visite."
+                "\n\n\t\t\t-  Optionnel : Envoyer un feedback au propiétaire",
             textAlign: TextAlign.start,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
