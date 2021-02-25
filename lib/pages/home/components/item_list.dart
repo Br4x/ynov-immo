@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ynov_immo/pages/details/details-screen.dart';
 import 'package:ynov_immo/pages/home/components/item_card.dart';
+import 'package:ynov_immo/pages/les_biens/Search.dart';
 
 class ItemList extends StatelessWidget {
   const ItemList({
@@ -13,6 +14,21 @@ class ItemList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         children: <Widget>[
+          ItemCard(
+            svgSrc: "assets/icons/burger_beer.svg",
+            title: "Research",
+            shopName: "Research",
+            press: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return SearchScreen();
+                  },
+                ),
+              );
+            },
+          ),
           ItemCard(
             svgSrc: "assets/icons/burger_beer.svg",
             title: "Burger & Beer",
@@ -34,14 +50,9 @@ class ItemList extends StatelessWidget {
             shopName: "Wendys",
             press: () {},
           ),
-          ItemCard(
-            svgSrc: "assets/icons/burger_beer.svg",
-            title: "Burger & Beer",
-            shopName: "MacDonald's",
-            press: () {},
-          )
+         
         ],
-      ),
+      ), 
     );
   }
 }
